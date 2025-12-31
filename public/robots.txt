@@ -1,0 +1,9 @@
+# Studio de Zambete - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://studiodezambete.ro/sitemap.xml
+
+# Disallow API routes
+Disallow: /api/
