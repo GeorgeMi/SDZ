@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "your-google-verification-code",
+    google: "6QcoeRY8_d_NK5b9Wca9qMHyBS2JpL-GP71BSVA090Q",
   },
 };
 
@@ -81,8 +81,77 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const messages = await getMessages();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Dentist",
+    "name": "Studio de Zâmbete",
+    "description": "Cabinet stomatologic premium în Moinești. Tehnologie de ultimă generație, echipă de specialiști dedicați.",
+    "url": "https://studiodezambete.ro",
+    "telephone": ["+40754880388", "+40751522355"],
+    "email": "studiodezambete@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Str. Ion Creangă, bl. D5, sc. A, parter, ap. 1",
+      "addressLocality": "Moinești",
+      "addressRegion": "Bacău",
+      "postalCode": "605400",
+      "addressCountry": "RO"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "46.4833",
+      "longitude": "26.4833"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Monday",
+        "opens": "12:00",
+        "closes": "20:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "19:00"
+      }
+    ],
+    "priceRange": "$$",
+    "image": "https://studiodezambete.ro/og-image.jpg",
+    "sameAs": [
+      "https://maps.app.goo.gl/GtHvA4HA9sG8NoV26"
+    ],
+    "medicalSpecialty": [
+      "Dentistry",
+      "Orthodontics",
+      "Oral Surgery",
+      "Pediatric Dentistry",
+      "Endodontics",
+      "Periodontics",
+      "Prosthodontics"
+    ],
+    "availableService": [
+      {"@type": "MedicalProcedure", "name": "Profilaxie dentară"},
+      {"@type": "MedicalProcedure", "name": "Stomatologie generală"},
+      {"@type": "MedicalProcedure", "name": "Stomatologie pediatrică"},
+      {"@type": "MedicalProcedure", "name": "Implantologie"},
+      {"@type": "MedicalProcedure", "name": "Ortodonție"},
+      {"@type": "MedicalProcedure", "name": "Chirurgie dentară"},
+      {"@type": "MedicalProcedure", "name": "Estetică dentară"},
+      {"@type": "MedicalProcedure", "name": "Endodonție"},
+      {"@type": "MedicalProcedure", "name": "Parodontologie"},
+      {"@type": "MedicalProcedure", "name": "Protetică dentară"}
+    ]
+  };
+
   return (
     <html lang={locale}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${poppins.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
