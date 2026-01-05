@@ -12,67 +12,98 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://studiodezambete.ro"),
-  title: {
-    default: "Studio de Zâmbete | Cabinet stomatologic Moinești",
-    template: "%s | Studio de Zâmbete",
-  },
-  description: "Clinică stomatologică premium în Moinești. Tehnologie de ultimă generație, echipă de specialiști dedicați și servicii complete: implantologie, estetică dentară, ortodonție.",
-  keywords: ["stomatologie premium", "dentist Moinești", "clinică dentară", "implant dentar", "estetică dentară", "albire dentară", "ortodonție", "stomatologie copii"],
-  authors: [{ name: "Studio de Zâmbete" }],
-  creator: "Studio de Zâmbete",
-  publisher: "Studio de Zâmbete",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ro_RO",
-    alternateLocale: "en_US",
-    url: "https://studiodezambete.ro",
-    siteName: "Studio de Zâmbete",
-    title: "Studio de Zâmbete | Cabinet stomatologic Moinești",
-    description: "Redefinim experiența stomatologică. Tehnologie de ultimă generație într-un ambient premium.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Studio de Zâmbete - Cabinet stomatologic",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Studio de Zâmbete | Cabinet stomatologic",
-    description: "Redefinim experiența stomatologică. Tehnologie de ultimă generație într-un ambient premium.",
-    images: ["/og-image.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "6QcoeRY8_d_NK5b9Wca9qMHyBS2JpL-GP71BSVA090Q",
-  },
-};
+const baseUrl = "https://studiodezambete.ro";
 
 type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const isRomanian = locale === "ro";
+
+  return {
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: isRomanian
+        ? "Studio de Zâmbete | Cabinet stomatologic Moinești"
+        : "Studio de Zâmbete | Dental Clinic Moinești",
+      template: "%s | Studio de Zâmbete",
+    },
+    description: isRomanian
+      ? "Clinică stomatologică premium în Moinești. Tehnologie de ultimă generație, echipă de specialiști dedicați și servicii complete: implantologie, estetică dentară, ortodonție."
+      : "Premium dental clinic in Moinești. State-of-the-art technology, dedicated team of specialists and complete services: implantology, dental aesthetics, orthodontics.",
+    keywords: isRomanian
+      ? ["stomatologie premium", "dentist Moinești", "clinică dentară", "implant dentar", "estetică dentară", "albire dentară", "ortodonție", "stomatologie copii"]
+      : ["premium dentistry", "dentist Moinești", "dental clinic", "dental implant", "dental aesthetics", "teeth whitening", "orthodontics", "pediatric dentistry"],
+    authors: [{ name: "Studio de Zâmbete" }],
+    creator: "Studio de Zâmbete",
+    publisher: "Studio de Zâmbete",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        "ro": `${baseUrl}/ro`,
+        "en": `${baseUrl}/en`,
+        "x-default": `${baseUrl}/ro`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: isRomanian ? "ro_RO" : "en_US",
+      alternateLocale: isRomanian ? "en_US" : "ro_RO",
+      url: `${baseUrl}/${locale}`,
+      siteName: "Studio de Zâmbete",
+      title: isRomanian
+        ? "Studio de Zâmbete | Cabinet stomatologic Moinești"
+        : "Studio de Zâmbete | Dental Clinic Moinești",
+      description: isRomanian
+        ? "Redefinim experiența stomatologică. Tehnologie de ultimă generație într-un ambient premium."
+        : "Redefining the dental experience. State-of-the-art technology in a premium setting.",
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Studio de Zâmbete - Cabinet stomatologic",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Studio de Zâmbete | Cabinet stomatologic",
+      description: isRomanian
+        ? "Redefinim experiența stomatologică. Tehnologie de ultimă generație într-un ambient premium."
+        : "Redefining the dental experience. State-of-the-art technology in a premium setting.",
+      images: ["/og-image.jpg"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    verification: {
+      google: "6QcoeRY8_d_NK5b9Wca9qMHyBS2JpL-GP71BSVA090Q",
+    },
+  };
+}
+
+type LayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
 
-export default async function LocaleLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as 'ro' | 'en')) {
