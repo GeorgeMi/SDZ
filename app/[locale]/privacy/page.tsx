@@ -46,8 +46,7 @@ export default function Privacy() {
         bulletList: [
           { bold: "Date de identificare:", text: "nume, prenume" },
           { bold: "Date de contact:", text: "număr de telefon, adresă de email" },
-          { bold: "Date medicale:", text: "istoric medical dentar, tratamente anterioare, alergii (doar în cadrul consultațiilor)" },
-          { bold: "Date de navigare:", text: "adresă IP, tip browser, pagini vizitate (prin cookies)" }
+          { bold: "Date medicale:", text: "istoric medical dentar, tratamente anterioare, alergii (doar în cadrul consultațiilor)" }
         ]
       },
       {
@@ -77,8 +76,7 @@ export default function Privacy() {
         paragraphs: ["Datele personale sunt stocate pentru perioade diferite, în funcție de natura lor:"],
         bulletList: [
           { bold: "Datele medicale:", text: "conform legislației în vigoare privind documentația medicală (minimum 10 ani)" },
-          { bold: "Datele de contact din formulare:", text: "2 ani de la ultima interacțiune" },
-          { bold: "Datele de navigare (cookies):", text: "conform politicii de cookies" }
+          { bold: "Datele de contact din formulare:", text: "2 ani de la ultima interacțiune" }
         ]
       },
       {
@@ -102,9 +100,10 @@ export default function Privacy() {
         ]
       },
       {
-        title: "9. Cookies",
+        title: "9. Cookies și tracking",
         paragraphs: [
-          "Site-ul nostru utilizează cookies pentru a îmbunătăți experiența de navigare. Acestea includ cookies esențiale pentru funcționarea site-ului și cookies analitice pentru înțelegerea modului în care vizitatorii interacționează cu site-ul. Puteți gestiona preferințele cookies din setările browser-ului."
+          "Respectăm confidențialitatea dumneavoastră. Site-ul nostru nu utilizează cookies de tracking, cookies analitice sau alte tehnologii de urmărire a comportamentului vizitatorilor. Nu colectăm date despre navigarea dumneavoastră și nu partajăm informații cu terțe părți în scopuri de analiză sau marketing.",
+          "Singurele cookies care pot fi utilizate sunt cele strict necesare pentru funcționarea tehnică a site-ului (de exemplu, pentru menținerea sesiunii în formularul de contact), care nu necesită consimțământ conform legislației în vigoare."
         ]
       },
       {
@@ -147,8 +146,7 @@ export default function Privacy() {
         bulletList: [
           { bold: "Identification data:", text: "first name, last name" },
           { bold: "Contact data:", text: "phone number, email address" },
-          { bold: "Medical data:", text: "dental medical history, previous treatments, allergies (only during consultations)" },
-          { bold: "Browsing data:", text: "IP address, browser type, pages visited (through cookies)" }
+          { bold: "Medical data:", text: "dental medical history, previous treatments, allergies (only during consultations)" }
         ]
       },
       {
@@ -178,8 +176,7 @@ export default function Privacy() {
         paragraphs: ["Personal data is stored for different periods, depending on its nature:"],
         bulletList: [
           { bold: "Medical data:", text: "according to current legislation regarding medical documentation (minimum 10 years)" },
-          { bold: "Contact form data:", text: "2 years from the last interaction" },
-          { bold: "Browsing data (cookies):", text: "according to the cookie policy" }
+          { bold: "Contact form data:", text: "2 years from the last interaction" }
         ]
       },
       {
@@ -203,9 +200,10 @@ export default function Privacy() {
         ]
       },
       {
-        title: "9. Cookies",
+        title: "9. Cookies and Tracking",
         paragraphs: [
-          "Our website uses cookies to improve browsing experience. These include essential cookies for website functionality and analytical cookies to understand how visitors interact with the site. You can manage cookie preferences from your browser settings."
+          "We respect your privacy. Our website does not use tracking cookies, analytical cookies, or other technologies for monitoring visitor behavior. We do not collect data about your browsing activity and do not share information with third parties for analytics or marketing purposes.",
+          "The only cookies that may be used are those strictly necessary for the technical operation of the website (for example, to maintain the session in the contact form), which do not require consent under current legislation."
         ]
       },
       {
