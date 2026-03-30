@@ -138,13 +138,19 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": "Monday",
         "opens": "12:00",
-        "closes": "20:00"
+        "closes": "19:00"
       },
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+        "dayOfWeek": ["Tuesday", "Wednesday"],
         "opens": "08:00",
         "closes": "19:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
       }
     ],
     "priceRange": "$$",

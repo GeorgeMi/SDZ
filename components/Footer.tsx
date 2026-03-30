@@ -15,6 +15,7 @@ export default function Footer() {
   const tHeader = useTranslations("header");
   const tFooter = useTranslations("footer");
   const tServices = useTranslations("services");
+  const tContact = useTranslations("contactSection");
   const locale = useLocale();
 
   const quickLinks = [
@@ -165,11 +166,16 @@ export default function Footer() {
               </li>
               <li className="pt-4 sm:pt-6">
                 <span className="font-semibold uppercase tracking-wider text-dark">{t("schedule")}</span>
-                <div className="mt-2 sm:mt-3 text-gray-600">
-                  {locale === "ro" ? "L" : "Mon"}: 12:00 - 20:00
-                  <br />
-                  {locale === "ro" ? "Ma-V" : "Tue-Fri"}: 08:00 - 19:00
-                </div>
+                <table className="mt-2 sm:mt-3 text-gray-600">
+                  <tbody>
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <tr key={i}>
+                        <td className="pr-3 py-0.5">{tContact(`scheduleDay${i}`)}</td>
+                        <td className="py-0.5">{tContact(`scheduleHours${i}`)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </li>
             </ul>
           </div>

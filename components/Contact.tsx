@@ -9,6 +9,7 @@ export default function Contact() {
   const t = useTranslations("contactSection");
   const tServices = useTranslations("services");
 
+
   const services = [
     tServices("dentalProphylaxis"),
     tServices("generalDentistry"),
@@ -179,9 +180,16 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-medium text-dark mb-0.5 sm:mb-1 text-sm sm:text-base">{t("scheduleLabel")}</h4>
-                  <p className="text-gray-500 font-light text-sm sm:text-base">
-                    {t("scheduleValue1")}<br />{t("scheduleValue2")}
-                  </p>
+                  <table className="text-gray-500 font-light text-sm sm:text-base">
+                    <tbody>
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <tr key={i}>
+                          <td className="pr-3 py-0.5">{t(`scheduleDay${i}`)}</td>
+                          <td className="py-0.5">{t(`scheduleHours${i}`)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
