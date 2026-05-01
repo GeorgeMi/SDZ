@@ -201,7 +201,7 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <form onSubmit={handleSubmit} className="bg-white p-5 sm:p-6 lg:p-10 shadow-xl">
+            <form onSubmit={handleSubmit} className="bg-white p-5 sm:p-6 lg:p-10 shadow-xl" suppressHydrationWarning>
               <div className="space-y-4 sm:space-y-5 lg:space-y-6">
                 <div>
                   <label className="block text-xs sm:text-sm font-medium text-dark mb-1.5 sm:mb-2 uppercase tracking-wider">

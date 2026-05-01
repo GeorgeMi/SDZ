@@ -12,11 +12,18 @@ export default function Hero() {
       id="acasa"
       className="relative h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/background.webp')` }}
+        <video
+          src="/tur_virtual.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          controlsList="nodownload noremoteplayback"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>

@@ -40,11 +40,12 @@ export default function Welcome() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="order-1 lg:order-2"
           >
-            <div className="aspect-[4/3] sm:aspect-[4/4] lg:aspect-[4/5] relative overflow-hidden">
+            <div className="aspect-[4/3] sm:aspect-[4/4] lg:aspect-[4/5] relative overflow-hidden rounded-3xl shadow-2xl shadow-mint-dark/20 ring-1 ring-white/40">
               <Image
-                src="/about_us.webp"
+                src="/about_us.png"
                 alt={t("imagePlaceholder")}
                 fill
+                priority
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />

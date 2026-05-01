@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -13,6 +13,11 @@ const poppins = Poppins({
 });
 
 const baseUrl = "https://studiodezambete.ro";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -94,6 +99,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     verification: {
       google: "6QcoeRY8_d_NK5b9Wca9qMHyBS2JpL-GP71BSVA090Q",
+    },
+    icons: {
+      icon: [
+        { url: "/logo.png", media: "(prefers-color-scheme: light)" },
+        { url: "/logo-white.png", media: "(prefers-color-scheme: dark)" },
+      ],
     },
   };
 }

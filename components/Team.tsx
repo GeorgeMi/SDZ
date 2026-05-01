@@ -1,52 +1,48 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Linkedin, Mail } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const teamData = [
-  {
-    id: 1,
-    image: "/dr_stefan_agavrilaoie.jpg",
-    facebook: "https://www.facebook.com/drstefanagavriloaie/",
-  },
-  {
-    id: 2,
-    image: "/dr_mihai_handic.jpeg",
-    facebook: null,
-  },
-  {
-    id: 3,
-    image: "/dr_hadi_khodr.png",
-    facebook: null,
-  },
-  {
-    id: 4,
-    image: "/dr_manuela_antochi.png",
-    facebook: null,
-  },
-  {
-    id: 5,
-    image: "/dr_vlad_stanciu.jpeg",
-    facebook: null,
-  },
-  {
-    id: 6,
-    image: "/as_diana_ciobanu.jpeg",
-    facebook: null,
-  },
+  { id: 1, image: "/dr_stefan_agavrilaoie.jpg" },
+  { id: 2, image: "/dr_mihai_handic.jpg" },
+  { id: 3, image: "/dr_hadi_khodr.jpg" },
+  { id: 4, image: "/dr_manuela_antochi.jpg" },
+  { id: 5, image: "/dr_vlad_stanciu.jpg" },
+  { id: 6, image: "/as_diana_ciobanu.jpg" },
 ];
 
 export default function Team() {
   const t = useTranslations("team");
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const team = teamData.map((member) => ({
     ...member,
     name: t(`doctor${member.id}Name`),
     role: t(`doctor${member.id}Role`),
-    specialty: t(`doctor${member.id}Specialty`),
+    faculty: t(`doctor${member.id}Faculty`),
+    courses: t(`doctor${member.id}Courses`).split("\n").filter(Boolean),
+    handsOn: t(`doctor${member.id}HandsOn`).split("\n").filter(Boolean),
+    congresses: t(`doctor${member.id}Congresses`).split("\n").filter(Boolean),
   }));
+
+  const selected = team.find((m) => m.id === selectedId) ?? null;
+
+  useEffect(() => {
+    if (selectedId === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedId(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selectedId]);
 
   return (
     <section id="echipa" className="bg-white py-12 sm:py-16 lg:py-[15vh]">
@@ -79,8 +75,13 @@ export default function Team() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group"
             >
-              <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3 sm:mb-4 lg:mb-6">
-                {member.image ? (
+              <button
+                type="button"
+                onClick={() => setSelectedId(member.id)}
+                aria-label={member.name}
+                className="block w-full text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-mint"
+              >
+                <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3 sm:mb-4 lg:mb-6">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -88,48 +89,108 @@ export default function Team() {
                     className="object-cover object-top"
                     sizes="(max-width: 768px) 100vw, 320px"
                   />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-gray-400">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 mx-auto mb-1 sm:mb-2 bg-gray-200 flex items-center justify-center">
-                        <span className="text-lg sm:text-xl lg:text-2xl">👨‍⚕️</span>
-                      </div>
-                      <p className="text-[10px] sm:text-xs uppercase tracking-wider">{t("photoPlaceholder")}</p>
-                    </div>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-mint/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 sm:gap-4">
-                  <a
-                    href={member.facebook || "#"}
-                    target={member.facebook ? "_blank" : undefined}
-                    rel={member.facebook ? "noopener noreferrer" : undefined}
-                    className="w-8 h-8 sm:w-10 sm:h-10 bg-white flex items-center justify-center text-mint hover:scale-110 transition-transform"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </a>
-                  <a
-                    href="mailto:studiodezambete@gmail.com"
-                    className="w-8 h-8 sm:w-10 sm:h-10 bg-white flex items-center justify-center text-mint hover:scale-110 transition-transform"
-                    aria-label="Email"
-                  >
-                    <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </a>
                 </div>
-              </div>
 
-              <div className="text-center">
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-dark mb-0.5 sm:mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-mint text-[10px] sm:text-xs lg:text-sm font-medium tracking-wider whitespace-pre-line">
-                  {member.role}
-                </p>
-              </div>
+                <div className="text-center">
+                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-dark mb-0.5 sm:mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-mint text-[10px] sm:text-xs lg:text-sm font-medium tracking-wider whitespace-pre-line">
+                    {member.role}
+                  </p>
+                </div>
+              </button>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            onClick={() => setSelectedId(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="relative bg-white w-full max-w-[calc(100vw-2rem)] md:max-w-5xl max-h-[90vh] md:min-h-[30rem] overflow-hidden md:flex md:flex-row shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label={selected.name}
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedId(null)}
+                aria-label={t("closeBio")}
+                className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-dark transition-colors rounded-full shadow"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="hidden md:block relative md:w-2/5 md:self-stretch flex-shrink-0 bg-gray-100">
+                <Image
+                  src={selected.image}
+                  alt={selected.name}
+                  fill
+                  className="object-contain"
+                  sizes="40vw"
+                />
+              </div>
+
+              <div className="w-full max-h-[90vh] md:max-h-none md:flex-1 md:min-h-0 overflow-y-auto p-6 sm:p-8 md:p-10">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-dark mb-2">
+                  {selected.name}
+                </h3>
+                <p className="text-mint text-xs sm:text-sm font-medium tracking-wider uppercase mb-6 whitespace-pre-line">
+                  {selected.role}
+                </p>
+
+                {selected.faculty && (
+                  <div className="mb-5">
+                    <p className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-1.5">
+                      {t("facultyLabel")}
+                    </p>
+                    <p className="text-dark text-sm sm:text-base font-light whitespace-pre-line [overflow-wrap:anywhere]">
+                      {selected.faculty}
+                    </p>
+                  </div>
+                )}
+
+                {[
+                  { items: [...selected.courses, ...selected.handsOn], label: t("coursesLabel") },
+                  { items: selected.congresses, label: t("congressesLabel") },
+                ].map((section) =>
+                  section.items.length > 0 ? (
+                    <div key={section.label} className="mb-5 last:mb-0">
+                      <p className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-2">
+                        {section.label}
+                      </p>
+                      <ul className="space-y-1.5 list-disc pl-5 marker:text-mint">
+                        {section.items.map((item, i) => (
+                          <li
+                            key={i}
+                            className="text-dark text-sm sm:text-base font-light [overflow-wrap:anywhere]"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
