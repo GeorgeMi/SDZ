@@ -102,9 +102,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     icons: {
       icon: [
-        { url: "/logo.png", media: "(prefers-color-scheme: light)" },
-        { url: "/logo-white.png", media: "(prefers-color-scheme: dark)" },
+        { url: "/icon-light.png", media: "(prefers-color-scheme: light)", type: "image/png" },
+        { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)", type: "image/png" },
       ],
+      apple: { url: "/apple-icon.png", type: "image/png" },
     },
   };
 }

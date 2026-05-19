@@ -38,10 +38,10 @@ export default function Footer() {
 
   const quickLinks = [
     { name: tHeader("aboutUs"), href: "#despre" },
-    // { name: tHeader("team"), href: "#echipa" },
+    { name: tHeader("team"), href: "#echipa" },
     { name: tHeader("services"), href: "#servicii" },
     { name: tHeader("equipment"), href: "#dotari" },
-    // { name: tHeader("gallery"), href: "#galerie" },
+    { name: tHeader("gallery"), href: "#galerie" },
     { name: tHeader("contact"), href: "#contact" },
   ];
 

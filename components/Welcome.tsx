@@ -42,7 +42,7 @@ export default function Welcome() {
           >
             <div className="aspect-[4/3] sm:aspect-[4/4] lg:aspect-[4/5] relative overflow-hidden rounded-3xl shadow-2xl shadow-mint-dark/20 ring-1 ring-white/40">
               <Image
-                src="/about_us.png"
+                src="/about_us.webp"
                 alt={t("imagePlaceholder")}
                 fill
                 priority

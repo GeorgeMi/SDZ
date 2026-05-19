@@ -20,10 +20,10 @@ export default function Header() {
 
   const navItems = [
     { name: t("aboutUs"), href: "#despre" },
-    // { name: t("team"), href: "#echipa" },
+    { name: t("team"), href: "#echipa" },
     { name: t("services"), href: "#servicii" },
     { name: t("equipment"), href: "#dotari" },
-    // { name: t("gallery"), href: "#galerie" },
+    { name: t("gallery"), href: "#galerie" },
     { name: t("contact"), href: "#contact" },
   ];
 

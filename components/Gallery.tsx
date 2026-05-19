@@ -151,9 +151,18 @@ export default function Gallery() {
             >
               <ChevronRight className="w-8 h-8 sm:w-12 sm:h-12" />
             </button>
-            <div
-              className="relative max-w-6xl w-full max-h-[85vh] mx-8 sm:mx-16 flex items-center justify-center"
+            <motion.div
+              className="relative max-w-6xl w-full max-h-[85vh] mx-8 sm:mx-16 flex items-center justify-center touch-pan-y select-none"
               onClick={(e) => e.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.25}
+              onDragEnd={(_, info) => {
+                const offset = info.offset.x;
+                const velocity = info.velocity.x;
+                if (offset < -60 || velocity < -400) goToNext();
+                else if (offset > 60 || velocity > 400) goToPrev();
+              }}
             >
               <Image
                 key={selected.id}
@@ -161,10 +170,11 @@ export default function Gallery() {
                 alt={selected.title}
                 width={1920}
                 height={1080}
-                className="max-w-full max-h-[85vh] w-auto h-auto object-contain"
+                draggable={false}
+                className="max-w-full max-h-[85vh] w-auto h-auto object-contain pointer-events-none"
                 sizes="100vw"
               />
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
