@@ -3,11 +3,12 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Phone } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
   const t = useTranslations("hero");
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -24,6 +25,15 @@ export default function Hero() {
         ? "/tur_virtual_vertical.mp4"
         : "/tur_virtual.mp4";
 
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener("canplay", tryPlay);
+    return () => v.removeEventListener("canplay", tryPlay);
+  }, [videoSrc]);
+
   return (
     <section
       id="acasa"
@@ -33,6 +43,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         {videoSrc && (
           <video
+            ref={videoRef}
             key={videoSrc}
             src={videoSrc}
             poster={
@@ -47,7 +58,7 @@ export default function Hero() {
             preload="auto"
             disablePictureInPicture
             controlsList="nodownload noremoteplayback"
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="hero-video absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
         )}
         <div className="absolute inset-0 bg-black/50" />

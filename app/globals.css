@@ -75,3 +75,13 @@ header {
     font-size: 16px; /* Prevents iOS zoom on focus */
   }
 }
+
+/* Hide iOS Safari native play-button overlay on the Hero background
+   video (shown when autoplay is blocked, e.g. Low Power Mode). The
+   video has pointer-events:none so the button would be untappable
+   anyway. Scoped to .hero-video so the Gallery modal video is
+   unaffected. */
+.hero-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
