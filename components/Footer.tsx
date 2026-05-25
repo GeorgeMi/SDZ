@@ -189,7 +189,10 @@ export default function Footer() {
                     {[1, 2, 3, 4, 5, 6].map((i) => (
                       <tr key={i}>
                         <td className="pr-3 py-0.5">{tContact(`scheduleDay${i}`)}</td>
-                        <td className="py-0.5">{tContact(`scheduleHours${i}`)}</td>
+                        <td className="py-0.5">
+                          {i === 1 && <span className="text-transparent" aria-hidden="true">1</span>}
+                          {tContact(`scheduleHours${i}`)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

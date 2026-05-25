@@ -191,7 +191,10 @@ export default function Contact() {
                       {[1, 2, 3, 4, 5, 6].map((i) => (
                         <tr key={i}>
                           <td className="pr-3 py-0.5">{t(`scheduleDay${i}`)}</td>
-                          <td className="py-0.5">{t(`scheduleHours${i}`)}</td>
+                          <td className="py-0.5">
+                            {i === 1 && <span className="text-transparent" aria-hidden="true">1</span>}
+                            {t(`scheduleHours${i}`)}
+                          </td>
                         </tr>
                       ))}
                     </tbody>

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const teamData = [
-  { id: 1, image: "/dr_stefan_agavrilaoie.jpg" },
+  { id: 1, image: "/dr_stefan_agavrilaoie.jpg", objectPosition: "60% 0%" },
   { id: 2, image: "/dr_mihai_handic.jpg" },
   { id: 3, image: "/dr_hadi_khodr.jpg" },
   { id: 4, image: "/dr_manuela_antochi.jpg" },
@@ -110,7 +110,8 @@ export default function Team() {
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover object-top"
+                    className="object-cover"
+                    style={{ objectPosition: member.objectPosition ?? "top" }}
                     sizes="(max-width: 768px) 50vw, 320px"
                     priority={index < 3}
                   />
