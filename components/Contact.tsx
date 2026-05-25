@@ -94,7 +94,13 @@ export default function Contact() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let next = value;
+    if (name === "phone") {
+      // Allow only digits, +, spaces (with + only at start)
+      next = value.replace(/[^\d+\s]/g, "").replace(/(?!^)\+/g, "");
+    }
+    setFormData({ ...formData, [name]: next });
   };
 
   return (
@@ -214,6 +220,8 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     disabled={isLoading}
+                    maxLength={100}
+                    autoComplete="name"
                     className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-200 focus:border-mint focus:outline-none transition-colors bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
                     placeholder={t("fullNamePlaceholder")}
                   />
@@ -231,6 +239,10 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       disabled={isLoading}
+                      maxLength={20}
+                      inputMode="tel"
+                      autoComplete="tel"
+                      pattern="[\d+\s]*"
                       className={`w-full px-3 sm:px-4 py-3 sm:py-4 border focus:outline-none transition-colors bg-gray-50 disabled:opacity-50 text-sm sm:text-base ${
                         fieldErrors.phone ? "border-red-400 focus:border-red-500" : "border-gray-200 focus:border-mint"
                       }`}
@@ -248,6 +260,9 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       disabled={isLoading}
+                      maxLength={254}
+                      inputMode="email"
+                      autoComplete="email"
                       className={`w-full px-3 sm:px-4 py-3 sm:py-4 border focus:outline-none transition-colors bg-gray-50 disabled:opacity-50 text-sm sm:text-base ${
                         fieldErrors.email ? "border-red-400 focus:border-red-500" : "border-gray-200 focus:border-mint"
                       }`}
@@ -285,6 +300,7 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={4}
                     disabled={isLoading}
+                    maxLength={2000}
                     className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-200 focus:border-mint focus:outline-none transition-colors resize-none bg-gray-50 disabled:opacity-50 text-sm sm:text-base"
                     placeholder={t("messagePlaceholder")}
                   />

@@ -5,9 +5,29 @@ import nodemailer from "nodemailer";
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS = 3; // max 3 requests per minute
+const MAX_RATE_LIMIT_ENTRIES = 10000;
+
+// Field length limits
+const LIMITS = {
+  name: 100,
+  phone: 20,
+  email: 254,
+  service: 100,
+  message: 2000,
+} as const;
+
+const MAX_BODY_BYTES = 8 * 1024;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+
+  // Opportunistic cleanup of expired entries when map grows too large
+  if (rateLimitMap.size > MAX_RATE_LIMIT_ENTRIES) {
+    for (const [key, value] of rateLimitMap) {
+      if (now > value.resetTime) rateLimitMap.delete(key);
+    }
+  }
+
   const record = rateLimitMap.get(ip);
 
   if (!record || now > record.resetTime) {
@@ -35,6 +55,17 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => htmlEntities[char]);
 }
 
+// Strip control characters (incl. CR/LF) to prevent header injection
+function stripControlChars(text: string): string {
+  // eslint-disable-next-line no-control-regex
+  return text.replace(/[\x00-\x1F\x7F]/g, "");
+}
+
+function asTrimmedString(value: unknown, max: number): string {
+  if (typeof value !== "string") return "";
+  return stripControlChars(value).trim().slice(0, max);
+}
+
 // Validate phone format
 function isValidPhone(phone: string): boolean {
   const cleanPhone = phone.replace(/[\s-]/g, "");
@@ -43,7 +74,8 @@ function isValidPhone(phone: string): boolean {
 
 // Validate email format
 function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (email.length > LIMITS.email) return false;
+  return /^[^\s@<>"',;:\\]+@[^\s@<>"',;:\\]+\.[^\s@<>"',;:\\]+$/.test(email);
 }
 
 export async function POST(request: NextRequest) {
@@ -60,8 +92,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { name, phone, email, service, message } = body;
+    // Reject overly large payloads early
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { error: "Date trimise prea mari" },
+        { status: 413 }
+      );
+    }
+
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Cerere invalidă" },
+        { status: 400 }
+      );
+    }
+
+    if (!body || typeof body !== "object") {
+      return NextResponse.json(
+        { error: "Cerere invalidă" },
+        { status: 400 }
+      );
+    }
+
+    const raw = body as Record<string, unknown>;
+
+    // Validate types + normalize (strips control chars, trims, caps length)
+    const name = asTrimmedString(raw.name, LIMITS.name);
+    const phone = asTrimmedString(raw.phone, LIMITS.phone);
+    const email = asTrimmedString(raw.email, LIMITS.email);
+    const service = asTrimmedString(raw.service, LIMITS.service);
+    const message = asTrimmedString(raw.message, LIMITS.message);
 
     // Validate required fields
     if (!name || !phone) {
@@ -87,12 +151,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sanitize all user inputs
-    const safeName = escapeHtml(name.trim());
-    const safePhone = escapeHtml(phone.trim());
-    const safeEmail = email ? escapeHtml(email.trim()) : "";
-    const safeService = service ? escapeHtml(service.trim()) : "";
-    const safeMessage = message ? escapeHtml(message.trim()).replace(/\n/g, "<br>") : "";
+    // Sanitize all user inputs for HTML embedding
+    const safeName = escapeHtml(name);
+    const safePhone = escapeHtml(phone);
+    const safeEmail = escapeHtml(email);
+    const safeService = escapeHtml(service);
+    const safeMessage = message ? escapeHtml(message).replace(/\n/g, "<br>") : "";
+
+    // Phone normalized to digits/+ only for tel: URI
+    const telHref = phone.replace(/[^\d+]/g, "");
 
     // Create transporter with Gmail SMTP
     const transporter = nodemailer.createTransport({
@@ -107,8 +174,8 @@ export async function POST(request: NextRequest) {
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: process.env.GMAIL_USER,
-      replyTo: safeEmail || undefined,
-      subject: `Programare Nouă - ${safeName}`,
+      replyTo: email || undefined,
+      subject: `Programare Nouă - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #3EB489; border-bottom: 2px solid #3EB489; padding-bottom: 10px;">
@@ -129,7 +196,7 @@ export async function POST(request: NextRequest) {
                 Telefon:
               </td>
               <td style="padding: 10px; border-bottom: 1px solid #eee;">
-                <a href="tel:${safePhone}" style="color: #3EB489;">${safePhone}</a>
+                <a href="tel:${telHref}" style="color: #3EB489;">${safePhone}</a>
               </td>
             </tr>
             ${safeEmail ? `
@@ -138,7 +205,7 @@ export async function POST(request: NextRequest) {
                 Email:
               </td>
               <td style="padding: 10px; border-bottom: 1px solid #eee;">
-                <a href="mailto:${safeEmail}" style="color: #3EB489;">${safeEmail}</a>
+                <a href="mailto:${encodeURIComponent(email)}" style="color: #3EB489;">${safeEmail}</a>
               </td>
             </tr>
             ` : ""}

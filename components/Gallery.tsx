@@ -45,8 +45,8 @@ const galleryData: GalleryItem[] = [
     titleKey: "virtualTour",
     only: "mobile",
   },
-  { id: 1, src: "/cabinet_1.jpg", titleKey: "cabinet1" },
   { id: 2, src: "/cabinet_2.jpg", titleKey: "cabinet2" },
+  { id: 1, src: "/cabinet_1.jpg", titleKey: "cabinet1" },
   { id: 3, src: "/cabinet_3.jpg", titleKey: "cabinet3" },
   { id: 4, src: "/cabinet_4.png", titleKey: "cabinet4" },
   { id: 5, src: "/cabinet_5.png", titleKey: "cabinet5" },
@@ -86,10 +86,18 @@ export default function Gallery() {
     setSelectedId(items[(idx + 1) % items.length].id);
   };
 
+  const closeModal = () => {
+    if (typeof window !== "undefined" && window.history.state?.modal === "gallery") {
+      window.history.back();
+    } else {
+      setSelectedId(null);
+    }
+  };
+
   useEffect(() => {
     if (selectedId === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedId(null);
+      if (e.key === "Escape") closeModal();
       if (e.key === "ArrowLeft") goToPrev();
       if (e.key === "ArrowRight") goToNext();
     };
@@ -101,6 +109,15 @@ export default function Gallery() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
+
+  const isOpen = selectedId !== null;
+  useEffect(() => {
+    if (!isOpen) return;
+    window.history.pushState({ modal: "gallery" }, "");
+    const onPop = () => setSelectedId(null);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [isOpen]);
 
   return (
     <section id="galerie" className="bg-cream py-12 sm:py-16 lg:py-[15vh]">
@@ -149,6 +166,7 @@ export default function Gallery() {
                 src={item.video ? item.poster! : item.src}
                 alt={item.title}
                 fill
+                priority={idx === 0}
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes={idx === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 50vw, 33vw"}
               />
@@ -178,11 +196,11 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-dark/95 flex items-center justify-center p-4"
-            onClick={() => setSelectedId(null)}
+            onClick={closeModal}
           >
             <button
               type="button"
-              onClick={() => setSelectedId(null)}
+              onClick={closeModal}
               aria-label="Close"
               className="absolute top-4 right-4 sm:top-8 sm:right-8 text-white hover:text-mint transition-colors z-10"
             >

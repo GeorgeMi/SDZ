@@ -23,7 +23,7 @@ export default function Team() {
     ...member,
     name: t(`doctor${member.id}Name`),
     role: t(`doctor${member.id}Role`),
-    faculty: t(`doctor${member.id}Faculty`),
+    faculty: t(`doctor${member.id}Faculty`).split("\n").filter(Boolean),
     courses: t(`doctor${member.id}Courses`).split("\n").filter(Boolean),
     handsOn: t(`doctor${member.id}HandsOn`).split("\n").filter(Boolean),
     congresses: t(`doctor${member.id}Congresses`).split("\n").filter(Boolean),
@@ -31,10 +31,18 @@ export default function Team() {
 
   const selected = team.find((m) => m.id === selectedId) ?? null;
 
+  const closeModal = () => {
+    if (typeof window !== "undefined" && window.history.state?.modal === "team") {
+      window.history.back();
+    } else {
+      setSelectedId(null);
+    }
+  };
+
   useEffect(() => {
     if (selectedId === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedId(null);
+      if (e.key === "Escape") closeModal();
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -43,6 +51,15 @@ export default function Team() {
       window.removeEventListener("keydown", onKey);
     };
   }, [selectedId]);
+
+  const isOpen = selectedId !== null;
+  useEffect(() => {
+    if (!isOpen) return;
+    window.history.pushState({ modal: "team" }, "");
+    const onPop = () => setSelectedId(null);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [isOpen]);
 
   return (
     <section id="echipa" className="bg-white py-12 sm:py-16 lg:py-[15vh]">
@@ -114,7 +131,7 @@ export default function Team() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-            onClick={() => setSelectedId(null)}
+            onClick={closeModal}
           >
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -129,7 +146,7 @@ export default function Team() {
             >
               <button
                 type="button"
-                onClick={() => setSelectedId(null)}
+                onClick={closeModal}
                 aria-label={t("closeBio")}
                 className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-dark transition-colors rounded-full shadow"
               >
@@ -154,14 +171,27 @@ export default function Team() {
                   {selected.role}
                 </p>
 
-                {selected.faculty && (
+                {selected.faculty.length > 0 && (
                   <div className="mb-5">
                     <p className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-1.5">
                       {t("facultyLabel")}
                     </p>
-                    <p className="text-dark text-sm sm:text-base font-light whitespace-pre-line text-justify hyphens-auto [overflow-wrap:anywhere]">
-                      {selected.faculty}
-                    </p>
+                    {selected.faculty.length > 1 ? (
+                      <ul className="space-y-1.5 list-disc pl-5 marker:text-mint">
+                        {selected.faculty.map((line, i) => (
+                          <li
+                            key={i}
+                            className="text-dark text-sm sm:text-base font-light text-justify hyphens-auto [overflow-wrap:anywhere]"
+                          >
+                            {line}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-dark text-sm sm:text-base font-light text-justify hyphens-auto [overflow-wrap:anywhere]">
+                        {selected.faculty[0]}
+                      </p>
+                    )}
                   </div>
                 )}
 
