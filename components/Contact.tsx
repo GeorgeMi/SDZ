@@ -14,6 +14,7 @@ export default function Contact() {
     tServices("dentalProphylaxis"),
     tServices("generalDentistry"),
     tServices("pediatricDentistry"),
+    tServices("orthodontics"),
     tServices("odontotherapy"),
     tServices("periodontology"),
     tServices("endodontics"),

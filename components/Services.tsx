@@ -6,6 +6,7 @@ import {
   Sparkles,
   Heart,
   Baby,
+  Smile,
   Wrench,
   Leaf,
   Target,
@@ -23,6 +24,7 @@ export default function Services() {
     { title: t("dentalProphylaxis"), description: t("dentalProphylaxisDesc"), Icon: Sparkles },
     { title: t("generalDentistry"), description: t("generalDentistryDesc"), Icon: Heart },
     { title: t("pediatricDentistry"), description: t("pediatricDentistryDesc"), Icon: Baby },
+    { title: t("orthodontics"), description: t("orthodonticsDesc"), Icon: Smile },
     { title: t("odontotherapy"), description: t("odontotherapyDesc"), Icon: Wrench },
     { title: t("periodontology"), description: t("periodontologyDesc"), Icon: Leaf },
     { title: t("endodontics"), description: t("endodonticsDesc"), Icon: Target },
@@ -53,7 +55,7 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {services.map((service, index) => {
             const IconComponent = service.Icon;
             return (
@@ -64,7 +66,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group bg-white p-3 sm:p-4 lg:p-5 cursor-pointer transition-all duration-300 hover:-translate-y-2 sm:hover:-translate-y-3 hover:shadow-xl"
+                className="w-[calc(50%-6px)] sm:w-[calc(33.333%-10.667px)] md:w-[calc(25%-12px)] group bg-white p-3 sm:p-4 lg:p-5 cursor-pointer transition-all duration-300 hover:-translate-y-2 sm:hover:-translate-y-3 hover:shadow-xl"
               >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-mint/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-mint/20 transition-colors">
                   <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-mint" />
