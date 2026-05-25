@@ -3,8 +3,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
+
+type GalleryItem = {
+  id: number;
+  src: string;
+  titleKey: string;
+  video?: boolean;
+  poster?: string;
+  only?: "mobile" | "desktop";
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,9 +28,25 @@ const itemVariants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
 };
 
-const galleryData = [
-  { id: 2, src: "/cabinet_2.jpg", titleKey: "cabinet2" },
+const galleryData: GalleryItem[] = [
+  {
+    id: 6,
+    src: "/tur_virtual.mp4",
+    poster: "/tur_virtual_poster.jpg",
+    video: true,
+    titleKey: "virtualTour",
+    only: "desktop",
+  },
+  {
+    id: 7,
+    src: "/tur_virtual_vertical.mp4",
+    poster: "/tur_virtual_vertical_poster.jpg",
+    video: true,
+    titleKey: "virtualTour",
+    only: "mobile",
+  },
   { id: 1, src: "/cabinet_1.jpg", titleKey: "cabinet1" },
+  { id: 2, src: "/cabinet_2.jpg", titleKey: "cabinet2" },
   { id: 3, src: "/cabinet_3.jpg", titleKey: "cabinet3" },
   { id: 4, src: "/cabinet_4.png", titleKey: "cabinet4" },
   { id: 5, src: "/cabinet_5.png", titleKey: "cabinet5" },
@@ -30,8 +55,23 @@ const galleryData = [
 export default function Gallery() {
   const t = useTranslations("gallery");
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
-  const items = galleryData.map((item) => ({ ...item, title: t(item.titleKey) }));
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const items = galleryData
+    .filter((item) => {
+      if (!item.only) return true;
+      if (isMobile === null) return item.only === "desktop";
+      return item.only === (isMobile ? "mobile" : "desktop");
+    })
+    .map((item) => ({ ...item, title: t(item.titleKey) }));
   const selected = items.find((i) => i.id === selectedId) ?? null;
 
   const goToPrev = () => {
@@ -90,7 +130,7 @@ export default function Gallery() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
+          className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"
         >
           {items.map((item, idx) => (
             <motion.button
@@ -106,13 +146,26 @@ export default function Gallery() {
               }`}
             >
               <Image
-                src={item.src}
+                src={item.video ? item.poster! : item.src}
                 alt={item.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
-                sizes={idx === 0 ? "(max-width: 640px) 100vw, 50vw" : "(max-width: 640px) 50vw, 25vw"}
+                sizes={idx === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 50vw, 33vw"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {item.video && (
+                <>
+                  <div className="absolute inset-0 bg-dark/20" />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-3 sm:p-4 shadow-lg group-hover:bg-mint group-hover:scale-110 transition-all duration-300">
+                      <Play className="w-5 h-5 sm:w-7 sm:h-7 text-dark fill-dark group-hover:text-white group-hover:fill-white" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-dark/70 backdrop-blur-sm text-white text-[10px] sm:text-xs font-medium tracking-wider uppercase px-2 py-1 rounded">
+                    {t("virtualTour")}
+                  </div>
+                </>
+              )}
             </motion.button>
           ))}
         </motion.div>
@@ -154,7 +207,7 @@ export default function Gallery() {
             <motion.div
               className="relative max-w-6xl w-full max-h-[85vh] mx-8 sm:mx-16 flex items-center justify-center touch-pan-y select-none"
               onClick={(e) => e.stopPropagation()}
-              drag="x"
+              drag={selected.video ? false : "x"}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.25}
               onDragEnd={(_, info) => {
@@ -164,16 +217,30 @@ export default function Gallery() {
                 else if (offset > 60 || velocity > 400) goToPrev();
               }}
             >
-              <Image
-                key={selected.id}
-                src={selected.src}
-                alt={selected.title}
-                width={1920}
-                height={1080}
-                draggable={false}
-                className="max-w-full max-h-[85vh] w-auto h-auto object-contain pointer-events-none"
-                sizes="100vw"
-              />
+              {selected.video ? (
+                <video
+                  key={selected.id}
+                  src={selected.src}
+                  poster={selected.poster}
+                  controls
+                  autoPlay
+                  playsInline
+                  controlsList="nodownload noremoteplayback"
+                  disablePictureInPicture
+                  className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+                />
+              ) : (
+                <Image
+                  key={selected.id}
+                  src={selected.src}
+                  alt={selected.title}
+                  width={1920}
+                  height={1080}
+                  draggable={false}
+                  className="max-w-full max-h-[85vh] w-auto h-auto object-contain pointer-events-none"
+                  sizes="100vw"
+                />
+              )}
             </motion.div>
           </motion.div>
         )}

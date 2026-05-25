@@ -3,28 +3,53 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
   const t = useTranslations("hero");
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const videoSrc =
+    isMobile === null
+      ? null
+      : isMobile
+        ? "/tur_virtual_vertical.mp4"
+        : "/tur_virtual.mp4";
 
   return (
     <section
       id="acasa"
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative h-screen flex items-center justify-center overflow-hidden bg-dark"
     >
       {/* Background Video */}
       <div className="absolute inset-0">
-        <video
-          src="/tur_virtual.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          controlsList="nodownload noremoteplayback"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        />
+        {videoSrc && (
+          <video
+            key={videoSrc}
+            src={videoSrc}
+            poster={
+              isMobile
+                ? "/tur_virtual_vertical_poster.jpg"
+                : "/tur_virtual_poster.jpg"
+            }
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload noremoteplayback"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          />
+        )}
         <div className="absolute inset-0 bg-black/50" />
       </div>
 

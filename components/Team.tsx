@@ -87,7 +87,8 @@ export default function Team() {
                     alt={member.name}
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 768px) 100vw, 320px"
+                    sizes="(max-width: 768px) 50vw, 320px"
+                    priority={index < 3}
                   />
                 </div>
 
@@ -158,15 +159,16 @@ export default function Team() {
                     <p className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-1.5">
                       {t("facultyLabel")}
                     </p>
-                    <p className="text-dark text-sm sm:text-base font-light whitespace-pre-line [overflow-wrap:anywhere]">
+                    <p className="text-dark text-sm sm:text-base font-light whitespace-pre-line text-justify hyphens-auto [overflow-wrap:anywhere]">
                       {selected.faculty}
                     </p>
                   </div>
                 )}
 
                 {[
-                  { items: [...selected.courses, ...selected.handsOn], label: t("coursesLabel") },
+                  { items: selected.handsOn, label: t("handsOnLabel") },
                   { items: selected.congresses, label: t("congressesLabel") },
+                  { items: selected.courses, label: t("coursesLabel") },
                 ].map((section) =>
                   section.items.length > 0 ? (
                     <div key={section.label} className="mb-5 last:mb-0">
@@ -177,7 +179,7 @@ export default function Team() {
                         {section.items.map((item, i) => (
                           <li
                             key={i}
-                            className="text-dark text-sm sm:text-base font-light [overflow-wrap:anywhere]"
+                            className="text-dark text-sm sm:text-base font-light text-justify hyphens-auto [overflow-wrap:anywhere]"
                           >
                             {item}
                           </li>

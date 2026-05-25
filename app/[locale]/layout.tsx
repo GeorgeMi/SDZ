@@ -194,7 +194,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   };
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
