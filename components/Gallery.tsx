@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
@@ -56,6 +56,7 @@ export default function Gallery() {
   const t = useTranslations("gallery");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const closingRef = useRef(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -87,6 +88,8 @@ export default function Gallery() {
   };
 
   const closeModal = () => {
+    if (closingRef.current) return;
+    closingRef.current = true;
     if (typeof window !== "undefined" && window.history.state?.modal === "gallery") {
       window.history.back();
     } else {
@@ -113,8 +116,12 @@ export default function Gallery() {
   const isOpen = selectedId !== null;
   useEffect(() => {
     if (!isOpen) return;
+    closingRef.current = false;
     window.history.pushState({ modal: "gallery" }, "");
-    const onPop = () => setSelectedId(null);
+    const onPop = () => {
+      closingRef.current = false;
+      setSelectedId(null);
+    };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, [isOpen]);
@@ -200,7 +207,7 @@ export default function Gallery() {
           >
             <button
               type="button"
-              onClick={closeModal}
+              onClick={(e) => { e.stopPropagation(); closeModal(); }}
               aria-label="Close"
               className="absolute top-4 right-4 sm:top-8 sm:right-8 text-white hover:text-mint transition-colors z-10"
             >

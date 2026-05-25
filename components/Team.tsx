@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const teamData = [
   { id: 1, image: "/dr_stefan_agavrilaoie.jpg" },
@@ -18,6 +18,7 @@ const teamData = [
 export default function Team() {
   const t = useTranslations("team");
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const closingRef = useRef(false);
 
   const team = teamData.map((member) => ({
     ...member,
@@ -32,6 +33,8 @@ export default function Team() {
   const selected = team.find((m) => m.id === selectedId) ?? null;
 
   const closeModal = () => {
+    if (closingRef.current) return;
+    closingRef.current = true;
     if (typeof window !== "undefined" && window.history.state?.modal === "team") {
       window.history.back();
     } else {
@@ -55,8 +58,12 @@ export default function Team() {
   const isOpen = selectedId !== null;
   useEffect(() => {
     if (!isOpen) return;
+    closingRef.current = false;
     window.history.pushState({ modal: "team" }, "");
-    const onPop = () => setSelectedId(null);
+    const onPop = () => {
+      closingRef.current = false;
+      setSelectedId(null);
+    };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, [isOpen]);
