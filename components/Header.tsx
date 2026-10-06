@@ -6,6 +6,7 @@ import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, Phone, Globe } from "lucide-react";
 import Image from "next/image";
+import { EMAIL, IMAGES, PRIMARY_PHONE, sectionHref } from "@/lib/site";
 
 export default function Header() {
   const t = useTranslations("header");
@@ -13,29 +14,18 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const navItems = [
-    { name: t("aboutUs"), href: "#despre" },
-    { name: t("team"), href: "#echipa" },
-    { name: t("services"), href: "#servicii" },
-    { name: t("equipment"), href: "#dotari" },
-    { name: t("gallery"), href: "#galerie" },
-    { name: t("contact"), href: "#contact" },
+    { name: t("aboutUs"), href: sectionHref(locale, "despre") },
+    { name: t("team"), href: sectionHref(locale, "echipa") },
+    { name: t("services"), href: sectionHref(locale, "servicii") },
+    { name: t("equipment"), href: sectionHref(locale, "dotari") },
+    { name: t("gallery"), href: sectionHref(locale, "galerie") },
+    { name: t("contact"), href: sectionHref(locale, "contact") },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
-    // Check scroll position on mount
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Handle escape key and focus trap for mobile menu
   useEffect(() => {
@@ -90,9 +80,9 @@ export default function Header() {
           {/* Logo + Navigation group */}
           <div className="flex items-center lg:gap-12">
             {/* Logo */}
-            <a href="#acasa" className="flex items-center justify-center">
+            <a href={sectionHref(locale, "acasa")} className="flex items-center justify-center">
               <Image
-                src="/logo.png"
+                src={IMAGES.logo.src}
                 alt="Studio de Zâmbete"
                 width={140}
                 height={140}
@@ -144,14 +134,14 @@ export default function Header() {
             </div>
 
             <a
-              href="tel:+40754880388"
+              href={`tel:${PRIMARY_PHONE.e164}`}
               className="flex items-center gap-2 text-sm font-medium transition-colors text-dark"
             >
               <Phone className="w-4 h-4" />
-              0754 880 388
+              {PRIMARY_PHONE.display}
             </a>
             <a
-              href="#contact"
+              href={sectionHref(locale, "contact")}
               className="bg-mint hover:bg-mint-dark text-dark px-6 py-3 text-sm font-semibold uppercase tracking-wider transition-all duration-200"
             >
               {t("appointment")}
@@ -187,7 +177,7 @@ export default function Header() {
           {/* Header cu logo și buton închidere */}
           <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
             <Image
-              src="/logo.png"
+              src={IMAGES.logo.src}
               alt="Studio de Zâmbete"
               width={48}
               height={48}
@@ -249,17 +239,17 @@ export default function Header() {
             </div>
 
             <a
-              href="#contact"
+              href={sectionHref(locale, "contact")}
               onClick={() => setIsMobileMenuOpen(false)}
               className="bg-mint hover:bg-mint-dark text-dark w-full py-4 text-sm font-semibold uppercase tracking-wider text-center block mb-6 transition-colors"
             >
               {t("appointmentOnline")}
             </a>
             <div className="flex justify-center gap-8 text-gray-500 text-sm">
-              <a href="tel:+40754880388" className="hover:text-mint transition-colors">
-                0754 880 388
+              <a href={`tel:${PRIMARY_PHONE.e164}`} className="hover:text-mint transition-colors">
+                {PRIMARY_PHONE.display}
               </a>
-              <a href="mailto:studiodezambete@gmail.com" className="hover:text-mint transition-colors">
+              <a href={`mailto:${EMAIL}`} className="hover:text-mint transition-colors">
                 Email
               </a>
             </div>

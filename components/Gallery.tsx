@@ -2,14 +2,17 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
+import SectionCta from "@/components/SectionCta";
+import { IMAGES, VIDEO_TOUR, sectionHref } from "@/lib/site";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 type GalleryItem = {
   id: number;
   src: string;
-  titleKey: string;
+  altKey: string;
   video?: boolean;
   poster?: string;
   only?: "mobile" | "desktop";
@@ -31,40 +34,33 @@ const itemVariants = {
 const galleryData: GalleryItem[] = [
   {
     id: 6,
-    src: "/tur_virtual.mp4",
-    poster: "/tur_virtual_poster.jpg",
+    src: VIDEO_TOUR.src,
+    poster: IMAGES.videoPoster.src,
     video: true,
-    titleKey: "virtualTour",
+    altKey: "videoAlt",
     only: "desktop",
   },
   {
     id: 7,
-    src: "/tur_virtual_vertical.mp4",
-    poster: "/tur_virtual_vertical_poster.jpg",
+    src: VIDEO_TOUR.srcVertical,
+    poster: IMAGES.videoPosterVertical.src,
     video: true,
-    titleKey: "virtualTour",
+    altKey: "videoAlt",
     only: "mobile",
   },
-  { id: 2, src: "/cabinet_2.jpg", titleKey: "cabinet2" },
-  { id: 1, src: "/cabinet_1.jpg", titleKey: "cabinet1" },
-  { id: 3, src: "/cabinet_3.jpg", titleKey: "cabinet3" },
-  { id: 4, src: "/cabinet_4.png", titleKey: "cabinet4" },
-  { id: 5, src: "/cabinet_5.png", titleKey: "cabinet5" },
+  { id: 2, src: IMAGES.waitingArea.src, altKey: "waitingAreaAlt" },
+  { id: 1, src: IMAGES.entrance.src, altKey: "entranceAlt" },
+  { id: 3, src: IMAGES.reception.src, altKey: "receptionAlt" },
+  { id: 4, src: IMAGES.dentalUnit.src, altKey: "dentalUnitAlt" },
+  { id: 5, src: IMAGES.treatmentRoom.src, altKey: "treatmentRoomAlt" },
 ];
 
 export default function Gallery() {
   const t = useTranslations("gallery");
+  const locale = useLocale();
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const isMobile = useIsMobile();
   const closingRef = useRef(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   const items = galleryData
     .filter((item) => {
@@ -72,7 +68,7 @@ export default function Gallery() {
       if (isMobile === null) return item.only === "desktop";
       return item.only === (isMobile ? "mobile" : "desktop");
     })
-    .map((item) => ({ ...item, title: t(item.titleKey) }));
+    .map((item) => ({ ...item, alt: t(item.altKey) }));
   const selected = items.find((i) => i.id === selectedId) ?? null;
 
   const goToPrev = () => {
@@ -139,14 +135,12 @@ export default function Gallery() {
           <p className="text-mint text-xs sm:text-sm font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-4 sm:mb-6">
             {t("subtitle")}
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6 text-balance">
             {t("title")} <span className="font-semibold">{t("titleHighlight")}</span>
           </h2>
-          {t("description") && (
-            <p className="text-gray-500 font-light max-w-2xl mx-auto text-sm sm:text-base px-2">
-              {t("description")}
-            </p>
-          )}
+          <p className="text-gray-500 font-light max-w-2xl mx-auto text-sm sm:text-base px-2">
+            {t("description")}
+          </p>
         </motion.div>
 
         <motion.div
@@ -162,7 +156,7 @@ export default function Gallery() {
               type="button"
               variants={itemVariants}
               onClick={() => setSelectedId(item.id)}
-              aria-label={item.title}
+              aria-label={item.alt}
               className={`relative group overflow-hidden bg-gray-100 cursor-pointer rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint ${
                 idx === 0
                   ? "col-span-2 row-span-2 aspect-square"
@@ -171,7 +165,7 @@ export default function Gallery() {
             >
               <Image
                 src={item.video ? item.poster! : item.src}
-                alt={item.title}
+                alt={item.alt}
                 fill
                 priority={idx === 0}
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -194,6 +188,21 @@ export default function Gallery() {
             </motion.button>
           ))}
         </motion.div>
+
+        <SectionCta className="mt-10 sm:mt-12 lg:mt-16" showButtons={false}>
+          {t.rich("ctaText", {
+            services: (chunks) => (
+              <a href={sectionHref(locale, "servicii")} className="text-mint-dark font-medium underline underline-offset-4 hover:text-dark transition-colors">
+                {chunks}
+              </a>
+            ),
+            booking: (chunks) => (
+              <a href={sectionHref(locale, "contact")} className="text-mint-dark font-medium underline underline-offset-4 hover:text-dark transition-colors">
+                {chunks}
+              </a>
+            ),
+          })}
+        </SectionCta>
       </div>
 
       <AnimatePresence>
@@ -247,6 +256,7 @@ export default function Gallery() {
                   key={selected.id}
                   src={selected.src}
                   poster={selected.poster}
+                  aria-label={selected.alt}
                   controls
                   autoPlay
                   playsInline
@@ -258,7 +268,7 @@ export default function Gallery() {
                 <Image
                   key={selected.id}
                   src={selected.src}
-                  alt={selected.title}
+                  alt={selected.alt}
                   width={1920}
                   height={1080}
                   draggable={false}

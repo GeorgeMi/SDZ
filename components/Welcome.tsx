@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { IMAGES } from "@/lib/site";
 
 export default function Welcome() {
   const t = useTranslations("welcome");
@@ -23,12 +24,11 @@ export default function Welcome() {
               {t("subtitle")}
             </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark leading-tight mb-4 sm:mb-6 lg:mb-8">
-              {t("title1")} <span className="font-semibold">{t("excellence")}</span>,
-              <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>{t("title2")} <span className="font-semibold">{t("yourSmile")}</span>
+              {t("title")} <span className="font-semibold">{t("titleHighlight")}</span>
             </h2>
-            <div className="text-gray-600 font-light leading-relaxed text-base sm:text-lg lg:text-xl text-justify">
+            <div className="text-gray-600 font-light leading-relaxed text-base sm:text-lg lg:text-xl text-justify space-y-4">
               <p>{t("paragraph1")}</p>
+              <p>{t("paragraph2")}</p>
             </div>
           </motion.div>
 
@@ -42,8 +42,8 @@ export default function Welcome() {
           >
             <div className="aspect-[4/3] sm:aspect-[4/4] lg:aspect-[4/5] relative overflow-hidden rounded-3xl shadow-2xl shadow-mint-dark/20 ring-1 ring-white/40">
               <Image
-                src="/about_us.webp"
-                alt={t("imagePlaceholder")}
+                src={IMAGES.interior.src}
+                alt={t("imageAlt")}
                 fill
                 priority
                 className="object-cover"

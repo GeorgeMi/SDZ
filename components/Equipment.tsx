@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
+import SectionCta from "@/components/SectionCta";
 
 export default function Equipment() {
   const t = useTranslations("equipment");
@@ -74,6 +75,10 @@ export default function Equipment() {
             );
           })}
         </div>
+
+        <SectionCta className="mt-10 sm:mt-12 lg:mt-16" showPhone={false}>
+          {t("ctaText")}
+        </SectionCta>
       </div>
     </section>
   );

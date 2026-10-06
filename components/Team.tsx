@@ -5,24 +5,18 @@ import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-
-const teamData = [
-  { id: 1, image: "/dr_stefan_agavrilaoie.jpg", objectPosition: "60% 0%" },
-  { id: 2, image: "/dr_mihai_handic.jpg" },
-  { id: 3, image: "/dr_hadi_khodr.jpg" },
-  { id: 4, image: "/dr_manuela_antochi.jpg" },
-  { id: 5, image: "/dr_vlad_stanciu.jpg" },
-  { id: 6, image: "/as_diana_ciobanu.jpg" },
-];
+import SectionCta from "@/components/SectionCta";
+import { TEAM } from "@/lib/site";
 
 export default function Team() {
   const t = useTranslations("team");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const closingRef = useRef(false);
 
-  const team = teamData.map((member) => ({
+  const team = TEAM.map((member) => ({
     ...member,
     name: t(`doctor${member.id}Name`),
+    alt: t(`doctor${member.id}Alt`),
     role: t(`doctor${member.id}Role`),
     faculty: t(`doctor${member.id}Faculty`).split("\n").filter(Boolean),
     courses: t(`doctor${member.id}Courses`).split("\n").filter(Boolean),
@@ -81,7 +75,7 @@ export default function Team() {
           <p className="text-mint text-xs sm:text-sm font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-4 sm:mb-6">
             {t("subtitle")}
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6 text-balance">
             {t("title")} <span className="font-semibold">{t("titleHighlight")}</span>
           </h2>
           <p className="text-gray-500 font-light max-w-2xl mx-auto text-sm sm:text-base px-2">
@@ -107,8 +101,8 @@ export default function Team() {
               >
                 <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3 sm:mb-4 lg:mb-6">
                   <Image
-                    src={member.image}
-                    alt={member.name}
+                    src={member.image.src}
+                    alt={member.alt}
                     fill
                     className="object-cover"
                     style={{ objectPosition: member.objectPosition ?? "top" }}
@@ -129,6 +123,8 @@ export default function Team() {
             </motion.div>
           ))}
         </div>
+
+        <SectionCta className="mt-10 sm:mt-12 lg:mt-16" />
       </div>
 
       <AnimatePresence>
@@ -163,8 +159,8 @@ export default function Team() {
 
               <div className="hidden md:block relative md:w-2/5 md:self-stretch flex-shrink-0 bg-gray-100">
                 <Image
-                  src={selected.image}
-                  alt={selected.name}
+                  src={selected.image.src}
+                  alt={selected.alt}
                   fill
                   className="object-contain"
                   sizes="40vw"

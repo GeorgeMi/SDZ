@@ -1,28 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { Fragment, useState } from "react";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle } from "lucide-react";
+import ScheduleTable from "@/components/ScheduleTable";
+import { EMAIL, MAP_URL, PHONES, SERVICES } from "@/lib/site";
 
 export default function Contact() {
   const t = useTranslations("contactSection");
   const tServices = useTranslations("services");
+  const locale = useLocale();
 
-
-  const services = [
-    tServices("dentalProphylaxis"),
-    tServices("generalDentistry"),
-    tServices("pediatricDentistry"),
-    tServices("orthodontics"),
-    tServices("odontotherapy"),
-    tServices("periodontology"),
-    tServices("endodontics"),
-    tServices("dentalProsthetics"),
-    tServices("dentalAesthetics"),
-    tServices("implantology"),
-    tServices("dentalSurgery"),
-  ];
+  const services = SERVICES.map(({ key }) => tServices(key));
 
   const [formData, setFormData] = useState({
     name: "",
@@ -117,7 +108,7 @@ export default function Contact() {
           <p className="text-mint text-xs sm:text-sm font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-4 sm:mb-6">
             {t("subtitle")}
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-dark mb-4 sm:mb-6 text-balance">
             {t("title")} <span className="font-semibold">{t("titleHighlight")}</span>
           </h2>
         </motion.div>
@@ -141,7 +132,7 @@ export default function Contact() {
                 <div>
                   <h4 className="font-medium text-dark mb-0.5 sm:mb-1 text-sm sm:text-base">{t("addressLabel")}</h4>
                   <a
-                    href="https://maps.app.goo.gl/GtHvA4HA9sG8NoV26"
+                    href={MAP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-500 font-light text-sm sm:text-base hover:text-mint transition-colors"
@@ -158,13 +149,14 @@ export default function Contact() {
                 <div>
                   <h4 className="font-medium text-dark mb-0.5 sm:mb-1 text-sm sm:text-base">{t("phoneLabel")}</h4>
                   <div className="flex flex-col sm:flex-row sm:items-center">
-                    <a href="tel:+40754880388" className="text-mint hover:text-mint-dark transition-colors text-sm sm:text-base">
-                      0754 880 388
-                    </a>
-                    <span className="text-gray-400 mx-2 hidden sm:inline">|</span>
-                    <a href="tel:+40751522355" className="text-mint hover:text-mint-dark transition-colors text-sm sm:text-base">
-                      0751 522 355
-                    </a>
+                    {PHONES.map((phone, i) => (
+                      <Fragment key={phone.e164}>
+                        {i > 0 && <span className="text-gray-400 mx-2 hidden sm:inline">|</span>}
+                        <a href={`tel:${phone.e164}`} className="text-mint hover:text-mint-dark transition-colors text-sm sm:text-base">
+                          {phone.display}
+                        </a>
+                      </Fragment>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -175,8 +167,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-medium text-dark mb-0.5 sm:mb-1 text-sm sm:text-base">Email</h4>
-                  <a href="mailto:studiodezambete@gmail.com" className="text-mint hover:text-mint-dark transition-colors text-sm sm:text-base break-all">
-                    studiodezambete@gmail.com
+                  <a href={`mailto:${EMAIL}`} className="text-mint hover:text-mint-dark transition-colors text-sm sm:text-base break-all">
+                    {EMAIL}
                   </a>
                 </div>
               </div>
@@ -187,19 +179,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-medium text-dark mb-0.5 sm:mb-1 text-sm sm:text-base">{t("scheduleLabel")}</h4>
-                  <table className="text-gray-500 font-light text-sm sm:text-base">
-                    <tbody>
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <tr key={i}>
-                          <td className="pr-3 py-0.5">{t(`scheduleDay${i}`)}</td>
-                          <td className="py-0.5">
-                            {i === 1 && <span className="text-transparent" aria-hidden="true">1</span>}
-                            {t(`scheduleHours${i}`)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  <ScheduleTable className="text-gray-500 font-light text-sm sm:text-base" />
                 </div>
               </div>
             </div>
@@ -338,6 +318,16 @@ export default function Contact() {
                     </>
                   )}
                 </button>
+
+                <p className="text-gray-500 font-light text-xs sm:text-sm text-center">
+                  {t.rich("privacyNotice", {
+                    link: (chunks) => (
+                      <Link href={`/${locale}/privacy`} className="text-mint-dark underline underline-offset-2 hover:text-dark transition-colors">
+                        {chunks}
+                      </Link>
+                    ),
+                  })}
+                </p>
               </div>
             </form>
           </motion.div>

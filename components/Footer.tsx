@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import ScheduleTable from "@/components/ScheduleTable";
+import { EMAIL, IMAGES, MAP_URL, PHONES, SERVICES, SOCIAL_LINKS, sectionHref, servicePath } from "@/lib/site";
 
 function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -22,10 +24,10 @@ function ThreadsIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/drstefanagavriloaie/", label: "Facebook" },
-  { icon: Instagram, href: "https://www.instagram.com/studiodezambete/", label: "Instagram" },
-  { icon: TikTokIcon, href: "https://www.tiktok.com/@studiodezambete", label: "TikTok" },
-  { icon: ThreadsIcon, href: "https://www.threads.com/@studiodezambete", label: "Threads" },
+  { icon: Facebook, href: SOCIAL_LINKS.facebook, label: "Facebook" },
+  { icon: Instagram, href: SOCIAL_LINKS.instagram, label: "Instagram" },
+  { icon: TikTokIcon, href: SOCIAL_LINKS.tiktok, label: "TikTok" },
+  { icon: ThreadsIcon, href: SOCIAL_LINKS.threads, label: "Threads" },
 ];
 
 export default function Footer() {
@@ -33,30 +35,18 @@ export default function Footer() {
   const tHeader = useTranslations("header");
   const tFooter = useTranslations("footer");
   const tServices = useTranslations("services");
-  const tContact = useTranslations("contactSection");
   const locale = useLocale();
 
   const quickLinks = [
-    { name: tHeader("aboutUs"), href: "#despre" },
-    { name: tHeader("team"), href: "#echipa" },
-    { name: tHeader("services"), href: "#servicii" },
-    { name: tHeader("equipment"), href: "#dotari" },
-    { name: tHeader("gallery"), href: "#galerie" },
-    { name: tHeader("contact"), href: "#contact" },
+    { name: tHeader("aboutUs"), href: sectionHref(locale, "despre") },
+    { name: tHeader("team"), href: sectionHref(locale, "echipa") },
+    { name: tHeader("services"), href: sectionHref(locale, "servicii") },
+    { name: tHeader("equipment"), href: sectionHref(locale, "dotari") },
+    { name: tHeader("gallery"), href: sectionHref(locale, "galerie") },
+    { name: tHeader("contact"), href: sectionHref(locale, "contact") },
   ];
 
-  const services = [
-    tServices("dentalProphylaxis"),
-    tServices("generalDentistry"),
-    tServices("pediatricDentistry"),
-    tServices("odontotherapy"),
-    tServices("periodontology"),
-    tServices("endodontics"),
-    tServices("dentalProsthetics"),
-    tServices("dentalAesthetics"),
-    tServices("implantology"),
-    tServices("dentalSurgery"),
-  ];
+  const services = SERVICES.map(({ slug, key }) => ({ name: tServices(key), href: servicePath(locale, slug) }));
   return (
     <footer className="relative text-dark">
       {/* Background Image */}
@@ -75,7 +65,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1 flex flex-col items-center lg:-mt-4">
             <div className="mb-4 sm:mb-6">
               <Image
-                src="/logo.png"
+                src={IMAGES.logo.src}
                 alt="Studio de Zâmbete"
                 width={140}
                 height={140}
@@ -125,18 +115,18 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3">
               {services.slice(0, 6).map((service) => (
-                <li key={service}>
-                  <a
-                    href="#servicii"
+                <li key={service.href}>
+                  <Link
+                    href={service.href}
                     className="text-gray-600 hover:text-mint text-xs sm:text-sm font-light transition-colors"
                   >
-                    {service}
-                  </a>
+                    {service.name}
+                  </Link>
                 </li>
               ))}
               <li>
                 <a
-                  href="#servicii"
+                  href={sectionHref(locale, "servicii")}
                   className="text-mint hover:text-mint-dark text-xs sm:text-sm font-medium transition-colors"
                 >
                   {t("viewAll")} →
@@ -153,7 +143,7 @@ export default function Footer() {
             <ul className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-600 font-light">
               <li>
                 <a
-                  href="https://maps.app.goo.gl/GtHvA4HA9sG8NoV26"
+                  href={MAP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-mint transition-colors"
@@ -165,38 +155,24 @@ export default function Footer() {
                   )}
                 </a>
               </li>
-              <li>
-                <a href="tel:+40754880388" className="hover:text-mint transition-colors">
-                  0754 880 388
-                </a>
-                <br />
-                <a href="tel:+40751522355" className="hover:text-mint transition-colors">
-                  0751 522 355
-                </a>
+              <li className="flex flex-col">
+                {PHONES.map((phone) => (
+                  <a key={phone.e164} href={`tel:${phone.e164}`} className="hover:text-mint transition-colors">
+                    {phone.display}
+                  </a>
+                ))}
               </li>
               <li className="hidden sm:block">
                 <a
-                  href="mailto:studiodezambete@gmail.com"
+                  href={`mailto:${EMAIL}`}
                   className="hover:text-mint transition-colors break-all"
                 >
-                  studiodezambete@gmail.com
+                  {EMAIL}
                 </a>
               </li>
               <li className="pt-4 sm:pt-6">
                 <span className="font-semibold uppercase tracking-wider text-dark">{t("schedule")}</span>
-                <table className="mt-2 sm:mt-3 text-gray-600">
-                  <tbody>
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <tr key={i}>
-                        <td className="pr-3 py-0.5">{tContact(`scheduleDay${i}`)}</td>
-                        <td className="py-0.5">
-                          {i === 1 && <span className="text-transparent" aria-hidden="true">1</span>}
-                          {tContact(`scheduleHours${i}`)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <ScheduleTable className="mt-2 sm:mt-3 text-gray-600" />
               </li>
             </ul>
           </div>

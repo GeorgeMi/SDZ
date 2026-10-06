@@ -1,0 +1,796 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://studiodezambete.ro/#organization",
+      "name": "Studio de Zâmbete",
+      "url": "https://studiodezambete.ro/ro",
+      "description": "Studio de Zâmbete, cabinet stomatologic în Moinești: stomatologie generală și pediatrică, ortodonție, implantologie și estetică dentară. Programează-te online.",
+      "logo": {
+        "@id": "https://studiodezambete.ro/ro#image-logo"
+      },
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#primaryimage"
+      },
+      "telephone": [
+        "+40754880388",
+        "+40751522355"
+      ],
+      "email": "studiodezambete@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Str. Ion Creangă, bl. D5, sc. A, parter, ap. 1",
+        "addressLocality": "Moinești",
+        "addressRegion": "Bacău",
+        "addressCountry": "RO"
+      },
+      "hasMap": "https://maps.app.goo.gl/GtHvA4HA9sG8NoV26",
+      "contactPoint": [
+        {
+          "@id": "https://studiodezambete.ro/#contact-programari-1"
+        },
+        {
+          "@id": "https://studiodezambete.ro/#contact-programari-2"
+        }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "https://schema.org/Monday",
+          "opens": "12:00",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday"
+          ],
+          "opens": "08:00",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "https://schema.org/Saturday",
+            "https://schema.org/Sunday"
+          ],
+          "opens": "00:00",
+          "closes": "00:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/drstefanagavriloaie/",
+        "https://www.instagram.com/studiodezambete/",
+        "https://www.tiktok.com/@studiodezambete",
+        "https://www.threads.com/@studiodezambete"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://studiodezambete.ro/#website",
+      "url": "https://studiodezambete.ro",
+      "name": "Studio de Zâmbete",
+      "publisher": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://studiodezambete.ro/ro#webpage",
+      "url": "https://studiodezambete.ro/ro",
+      "name": "Studio de Zâmbete | Cabinet stomatologic în Moinești",
+      "description": "Studio de Zâmbete, cabinet stomatologic în Moinești: stomatologie generală și pediatrică, ortodonție, implantologie și estetică dentară. Programează-te online.",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/#website"
+      },
+      "mainEntity": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "about": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://studiodezambete.ro/ro#primaryimage"
+      },
+      "image": [
+        {
+          "@id": "https://studiodezambete.ro/ro#image-logo"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-about"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-stefan"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-mihai"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-hadi"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-manuela"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-vlad"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-diana"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-video-poster"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-asteptare"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-intrare"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-receptie"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#primaryimage"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-sala-tratament"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "https://studiodezambete.ro/ro#acasa"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#despre"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#echipa"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#servicii"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#dotari"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#galerie"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#contact"
+        }
+      ]
+    },
+    {
+      "@type": "ContactPoint",
+      "@id": "https://studiodezambete.ro/#contact-programari-1",
+      "contactType": "Programări și informații",
+      "telephone": "+40754880388",
+      "email": "studiodezambete@gmail.com",
+      "url": "https://studiodezambete.ro/ro#contact"
+    },
+    {
+      "@type": "ContactPoint",
+      "@id": "https://studiodezambete.ro/#contact-programari-2",
+      "contactType": "Programări și informații",
+      "telephone": "+40751522355",
+      "email": "studiodezambete@gmail.com",
+      "url": "https://studiodezambete.ro/ro#contact"
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#acasa",
+      "url": "https://studiodezambete.ro/ro#acasa",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Zâmbetul tău, preocuparea noastră",
+      "about": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#despre",
+      "url": "https://studiodezambete.ro/ro#despre",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Inspirați de excelență, dedicați zâmbetului tău",
+      "about": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-about"
+      }
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#echipa",
+      "url": "https://studiodezambete.ro/ro#echipa",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Medicii care îți definesc zâmbetul",
+      "mainEntity": {
+        "@id": "https://studiodezambete.ro/ro#team-list"
+      }
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#servicii",
+      "url": "https://studiodezambete.ro/ro#servicii",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Soluții complete",
+      "mainEntity": {
+        "@id": "https://studiodezambete.ro/ro#services-list"
+      }
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#dotari",
+      "url": "https://studiodezambete.ro/ro#dotari",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Tehnologie de vârf",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Scanner facial 3D"
+        },
+        {
+          "@type": "Thing",
+          "name": "Scanner intraoral"
+        },
+        {
+          "@type": "Thing",
+          "name": "Cameră intraorală"
+        },
+        {
+          "@type": "Thing",
+          "name": "Laser dentar"
+        },
+        {
+          "@type": "Thing",
+          "name": "Detector de culoare dentară"
+        },
+        {
+          "@type": "Thing",
+          "name": "Endomotor"
+        },
+        {
+          "@type": "Thing",
+          "name": "Apex locator"
+        },
+        {
+          "@type": "Thing",
+          "name": "Autoclav"
+        }
+      ]
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#galerie",
+      "url": "https://studiodezambete.ro/ro#galerie",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Tur virtual al cabinetului",
+      "image": [
+        {
+          "@id": "https://studiodezambete.ro/ro#image-asteptare"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-intrare"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-receptie"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#primaryimage"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#image-sala-tratament"
+        }
+      ],
+      "associatedMedia": [
+        {
+          "@id": "https://studiodezambete.ro/ro#image-video-poster"
+        },
+        {
+          "@id": "https://studiodezambete.ro/ro#video-tur-cabinet"
+        }
+      ]
+    },
+    {
+      "@type": "WebPageElement",
+      "@id": "https://studiodezambete.ro/ro#contact",
+      "url": "https://studiodezambete.ro/ro#contact",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#webpage"
+      },
+      "name": "Programează-te acum",
+      "about": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://studiodezambete.ro/ro#team-list",
+      "name": "Echipa Studio de Zâmbete",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-stefan"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-mihai"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-hadi"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-manuela"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-vlad"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@id": "https://studiodezambete.ro/#person-diana"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-stefan",
+      "name": "Ștefan Agavriloaie",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Medic stomatolog generalist",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-stefan"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-mihai",
+      "name": "Mihai Handîc",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Medic specialist în chirurgie dento-alveolară",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-mihai"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-hadi",
+      "name": "Hadi Khodr",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Medic specialist în ortodonție și ortopedie dento-facială",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-hadi"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-manuela",
+      "name": "Manuela Antochi",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Medic stomatolog generalist",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-manuela"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-vlad",
+      "name": "Vlad Stanciu",
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Medic stomatolog generalist",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-vlad"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://studiodezambete.ro/#person-diana",
+      "name": "Diana Ciobanu",
+      "jobTitle": "Asistent medical generalist",
+      "image": {
+        "@id": "https://studiodezambete.ro/ro#image-diana"
+      },
+      "affiliation": {
+        "@id": "https://studiodezambete.ro/#organization"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://studiodezambete.ro/ro#services-list",
+      "name": "Servicii stomatologice Studio de Zâmbete",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-profilaxie-dentara"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-stomatologie-generala"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-stomatologie-pediatrica"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-ortodontie"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-odontoterapie"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-parodontologie"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-endodontie"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-protetica-dentara"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-estetica-dentara"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-implantologie"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@id": "https://studiodezambete.ro/#service-chirurgie-dentara"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-profilaxie-dentara",
+      "name": "Profilaxie dentară",
+      "serviceType": "Profilaxie dentară",
+      "description": "Curățare și prevenție profesională",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-stomatologie-generala",
+      "name": "Stomatologie generală",
+      "serviceType": "Stomatologie generală",
+      "description": "Consultații și tratamente complete",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-stomatologie-pediatrica",
+      "name": "Stomatologie pediatrică",
+      "serviceType": "Stomatologie pediatrică",
+      "description": "Îngrijire dentară pentru copii",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-ortodontie",
+      "name": "Ortodonție",
+      "serviceType": "Ortodonție",
+      "description": "Aparate dentare și alinierea dinților",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-odontoterapie",
+      "name": "Odontoterapie",
+      "serviceType": "Odontoterapie",
+      "description": "Tratamente restaurative",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-parodontologie",
+      "name": "Parodontologie",
+      "serviceType": "Parodontologie",
+      "description": "Tratamente pentru gingii",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-endodontie",
+      "name": "Endodonție",
+      "serviceType": "Endodonție",
+      "description": "Tratamente de canal",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-protetica-dentara",
+      "name": "Protetică dentară",
+      "serviceType": "Protetică dentară",
+      "description": "Coroane și punți dentare",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-estetica-dentara",
+      "name": "Estetică dentară",
+      "serviceType": "Estetică dentară",
+      "description": "Fațete și albiri profesionale",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-implantologie",
+      "name": "Implantologie",
+      "serviceType": "Implantologie",
+      "description": "Implanturi dentare",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://studiodezambete.ro/#service-chirurgie-dentara",
+      "name": "Chirurgie dentară",
+      "serviceType": "Chirurgie dentară",
+      "description": "Extracții și intervenții complexe",
+      "provider": {
+        "@id": "https://studiodezambete.ro/#organization"
+      },
+      "url": "https://studiodezambete.ro/ro#servicii"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-logo",
+      "contentUrl": "https://www.studiodezambete.ro/logo.png",
+      "url": "https://www.studiodezambete.ro/logo.png",
+      "name": "Logo Studio de Zâmbete"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-about",
+      "contentUrl": "https://www.studiodezambete.ro/about_us.webp",
+      "url": "https://www.studiodezambete.ro/about_us.webp",
+      "name": "Examinare dentară cu oglindă"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-stefan",
+      "contentUrl": "https://www.studiodezambete.ro/dr_stefan_agavrilaoie.jpg",
+      "url": "https://www.studiodezambete.ro/dr_stefan_agavrilaoie.jpg",
+      "name": "Dr. Ștefan Agavriloaie"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-mihai",
+      "contentUrl": "https://www.studiodezambete.ro/dr_mihai_handic.jpg",
+      "url": "https://www.studiodezambete.ro/dr_mihai_handic.jpg",
+      "name": "Dr. Mihai Handîc"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-hadi",
+      "contentUrl": "https://www.studiodezambete.ro/dr_hadi_khodr.jpg",
+      "url": "https://www.studiodezambete.ro/dr_hadi_khodr.jpg",
+      "name": "Dr. Hadi Khodr"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-manuela",
+      "contentUrl": "https://www.studiodezambete.ro/dr_manuela_antochi.jpg",
+      "url": "https://www.studiodezambete.ro/dr_manuela_antochi.jpg",
+      "name": "Dr. Manuela Antochi"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-vlad",
+      "contentUrl": "https://www.studiodezambete.ro/dr_vlad_stanciu.jpg",
+      "url": "https://www.studiodezambete.ro/dr_vlad_stanciu.jpg",
+      "name": "Dr. Vlad Stanciu"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-diana",
+      "contentUrl": "https://www.studiodezambete.ro/as_diana_ciobanu.jpg",
+      "url": "https://www.studiodezambete.ro/as_diana_ciobanu.jpg",
+      "name": "Diana Ciobanu"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-video-poster",
+      "contentUrl": "https://www.studiodezambete.ro/tur_virtual_poster.jpg",
+      "url": "https://www.studiodezambete.ro/tur_virtual_poster.jpg",
+      "name": "Miniatura turului video al cabinetului Studio de Zâmbete"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-asteptare",
+      "contentUrl": "https://www.studiodezambete.ro/zona-asteptare-studio-de-zambete.jpg",
+      "url": "https://www.studiodezambete.ro/zona-asteptare-studio-de-zambete.jpg",
+      "name": "Zona de așteptare a cabinetului Studio de Zâmbete",
+      "width": 4240,
+      "height": 2832,
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-intrare",
+      "contentUrl": "https://www.studiodezambete.ro/intrare-cabinet-studio-de-zambete.jpg",
+      "url": "https://www.studiodezambete.ro/intrare-cabinet-studio-de-zambete.jpg",
+      "name": "Intrarea în cabinetul Studio de Zâmbete",
+      "width": 4240,
+      "height": 2832,
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-receptie",
+      "contentUrl": "https://www.studiodezambete.ro/receptie-studio-de-zambete.jpg",
+      "url": "https://www.studiodezambete.ro/receptie-studio-de-zambete.jpg",
+      "name": "Recepția cabinetului Studio de Zâmbete",
+      "width": 4240,
+      "height": 2832,
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#primaryimage",
+      "contentUrl": "https://www.studiodezambete.ro/unit-dentar-monitor-studio-de-zambete.png",
+      "url": "https://www.studiodezambete.ro/unit-dentar-monitor-studio-de-zambete.png",
+      "name": "Unitul dentar și monitorul din spațiul de tratament",
+      "width": 1448,
+      "height": 1086,
+      "encodingFormat": "image/png"
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://studiodezambete.ro/ro#image-sala-tratament",
+      "contentUrl": "https://www.studiodezambete.ro/sala-tratament-studio-de-zambete.png",
+      "url": "https://www.studiodezambete.ro/sala-tratament-studio-de-zambete.png",
+      "name": "Spațiu de tratament cu unit dentar și lampă",
+      "width": 1535,
+      "height": 1024,
+      "encodingFormat": "image/png"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://studiodezambete.ro/ro#video-tur-cabinet",
+      "name": "Turul video al cabinetului Studio de Zâmbete",
+      "description": "Prezentare video a interiorului cabinetului Studio de Zâmbete din Moinești.",
+      "contentUrl": "https://www.studiodezambete.ro/tur_virtual.mp4",
+      "thumbnailUrl": "https://www.studiodezambete.ro/tur_virtual_poster.jpg",
+      "duration": "PT47.273S",
+      "inLanguage": "ro-RO",
+      "isPartOf": {
+        "@id": "https://studiodezambete.ro/ro#galerie"
+      }
+    }
+  ]
+}

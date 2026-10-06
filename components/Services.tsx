@@ -1,38 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
-import {
-  Sparkles,
-  Heart,
-  Baby,
-  Smile,
-  Wrench,
-  Leaf,
-  Target,
-  Crown,
-  Gem,
-  Zap,
-  Microscope,
-  type LucideIcon,
-} from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import SectionCta from "@/components/SectionCta";
+import { SERVICE_ICONS } from "@/components/serviceIcons";
+import { SERVICES, servicePath } from "@/lib/site";
 
 export default function Services() {
   const t = useTranslations("services");
+  const locale = useLocale();
 
-  const services: { title: string; description: string; Icon: LucideIcon }[] = [
-    { title: t("dentalProphylaxis"), description: t("dentalProphylaxisDesc"), Icon: Sparkles },
-    { title: t("generalDentistry"), description: t("generalDentistryDesc"), Icon: Heart },
-    { title: t("pediatricDentistry"), description: t("pediatricDentistryDesc"), Icon: Baby },
-    { title: t("orthodontics"), description: t("orthodonticsDesc"), Icon: Smile },
-    { title: t("odontotherapy"), description: t("odontotherapyDesc"), Icon: Wrench },
-    { title: t("periodontology"), description: t("periodontologyDesc"), Icon: Leaf },
-    { title: t("endodontics"), description: t("endodonticsDesc"), Icon: Target },
-    { title: t("dentalProsthetics"), description: t("dentalProstheticsDesc"), Icon: Crown },
-    { title: t("dentalAesthetics"), description: t("dentalAestheticsDesc"), Icon: Gem },
-    { title: t("implantology"), description: t("implantologyDesc"), Icon: Zap },
-    { title: t("dentalSurgery"), description: t("dentalSurgeryDesc"), Icon: Microscope },
-  ];
+  const services = SERVICES.map(({ slug, key }) => ({
+    href: servicePath(locale, slug),
+    title: t(key),
+    description: t(`${key}Desc`),
+    Icon: SERVICE_ICONS[slug],
+  }));
 
   return (
     <section id="servicii" className="bg-gray-50 py-12 sm:py-16 lg:py-[15vh]">
@@ -60,8 +43,8 @@ export default function Services() {
             const IconComponent = service.Icon;
             return (
               <motion.a
-                key={service.title}
-                href="#contact"
+                key={service.href}
+                href={service.href}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -81,6 +64,12 @@ export default function Services() {
             );
           })}
         </div>
+
+        <p className="text-center text-gray-500 font-light text-xs sm:text-sm mt-8 sm:mt-10 px-2">
+          {t("treatmentNote")}
+        </p>
+
+        <SectionCta className="mt-6 sm:mt-8" />
       </div>
     </section>
   );

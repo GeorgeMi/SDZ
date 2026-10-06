@@ -3,27 +3,21 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Phone } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { IMAGES, PRIMARY_PHONE, VIDEO_TOUR } from "@/lib/site";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 export default function Hero() {
   const t = useTranslations("hero");
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const isMobile = useIsMobile();
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   const videoSrc =
     isMobile === null
       ? null
       : isMobile
-        ? "/tur_virtual_vertical.mp4"
-        : "/tur_virtual.mp4";
+        ? VIDEO_TOUR.srcVertical
+        : VIDEO_TOUR.src;
 
   useEffect(() => {
     const v = videoRef.current;
@@ -48,8 +42,8 @@ export default function Hero() {
             src={videoSrc}
             poster={
               isMobile
-                ? "/tur_virtual_vertical_poster.jpg"
-                : "/tur_virtual_poster.jpg"
+                ? IMAGES.videoPosterVertical.src
+                : IMAGES.videoPoster.src
             }
             autoPlay
             muted
@@ -66,25 +60,25 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 w-[90%] max-w-5xl mx-auto text-center px-2">
-        <motion.p
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-mint text-xs sm:text-sm font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-4 sm:mb-6 lg:mb-8"
         >
-          {t("subtitle")}
-        </motion.p>
+          {t("title")}
+        </motion.h1>
 
-        <motion.h1
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.15] mb-4 sm:mb-6 lg:mb-8"
         >
-          {t("title1")}
+          {t("tagline1")}
           <br />
-          <span className="font-semibold">{t("title2")}</span>
-        </motion.h1>
+          <span className="font-semibold">{t("tagline2")}</span>
+        </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -108,7 +102,7 @@ export default function Hero() {
             {t("bookOnline")}
           </a>
           <a
-            href="tel:+40754880388"
+            href={`tel:${PRIMARY_PHONE.e164}`}
             className="border border-white/30 hover:border-white text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 sm:gap-3"
           >
             <Phone className="w-4 h-4" />

@@ -57,7 +57,6 @@ function escapeHtml(text: string): string {
 
 // Strip control characters (incl. CR/LF) to prevent header injection
 function stripControlChars(text: string): string {
-  // eslint-disable-next-line no-control-regex
   return text.replace(/[\x00-\x1F\x7F]/g, "");
 }
 

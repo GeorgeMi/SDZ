@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://studiodezambete.ro/sitemap.xml
+Sitemap: https://www.studiodezambete.ro/sitemap.xml
 
 # Disallow API routes
 Disallow: /api/
