@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Facebook, Instagram } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import ScheduleTable from "@/components/ScheduleTable";
+import { openConsentSettings } from "@/lib/analytics";
 import { EMAIL, IMAGES, MAP_URL, PHONES, SERVICES, SOCIAL_LINKS, sectionHref, servicePath } from "@/lib/site";
 
 function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -186,13 +187,20 @@ export default function Footer() {
             <p className="text-gray-500 text-xs sm:text-sm font-light text-center sm:text-left">
               © {new Date().getFullYear()} {tHeader("brandName")}. {t("allRightsReserved")}.
             </p>
-            <div className="flex gap-4 sm:gap-8 text-xs sm:text-sm">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-x-8 text-xs sm:text-sm">
               <Link href={`/${locale}/privacy`} className="text-gray-500 hover:text-mint transition-colors font-light">
                 {t("privacy")}
               </Link>
               <Link href={`/${locale}/terms`} className="text-gray-500 hover:text-mint transition-colors font-light">
                 {t("terms")}
               </Link>
+              <button
+                type="button"
+                onClick={openConsentSettings}
+                className="text-gray-500 hover:text-mint transition-colors font-light"
+              >
+                {t("cookieSettings")}
+              </button>
             </div>
           </div>
         </div>

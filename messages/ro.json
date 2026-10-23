@@ -14,7 +14,8 @@
     "privacy": "Confidențialitate",
     "terms": "Termeni",
     "bookConsultation": "Programează o consultație",
-    "callPhone": "Sună la {phone}"
+    "callPhone": "Sună la {phone}",
+    "cookieSettings": "Setări cookie-uri"
   },
   "header": {
     "brandName": "STUDIO DE ZÂMBETE",
@@ -206,7 +207,8 @@
     "title": "Politica de",
     "titleHighlight": "Confidențialitate",
     "intro": "Studio de Zâmbete, cu sediul în Moinești, Strada Ion Creangă, bl. D5, sc. A, parter, ap. 1, respectă confidențialitatea datelor dumneavoastră personale și se angajează să protejeze informațiile pe care ni le furnizați.",
-    "introGdpr": "Această politică de confidențialitate explică modul în care colectăm, utilizăm și protejăm datele dumneavoastră personale în conformitate cu Regulamentul General privind Protecția Datelor (GDPR) - Regulamentul (UE) 2016/679."
+    "introGdpr": "Această politică de confidențialitate explică modul în care colectăm, utilizăm și protejăm datele dumneavoastră personale în conformitate cu Regulamentul General privind Protecția Datelor (GDPR) - Regulamentul (UE) 2016/679.",
+    "lastUpdated": "Ultima actualizare: Octombrie 2026"
   },
   "terms": {
     "title": "Termeni și",
@@ -228,5 +230,12 @@
     "privacyTitle": "Politica de confidențialitate",
     "termsTitle": "Termeni și condiții",
     "contactType": "Programări și informații"
+  },
+  "cookies": {
+    "title": "Cookie-uri",
+    "message": "Folosim Google Analytics pentru a înțelege cum este utilizat site-ul și a-l îmbunătăți. Cookie-urile de analiză sunt activate doar cu acordul dumneavoastră și vă puteți răzgândi oricând din „Setări cookie-uri”.",
+    "learnMore": "Politica de confidențialitate",
+    "accept": "Accept",
+    "reject": "Refuz"
   }
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
+import { openConsentSettings } from "@/lib/analytics";
 
 type BulletItem = { bold?: string; text: string };
 
@@ -11,6 +12,7 @@ type Section = {
   list?: { label: string; value: string }[];
   bulletList?: BulletItem[];
   footer?: string;
+  cookieSettings?: boolean;
 };
 
 type Content = {
@@ -65,7 +67,7 @@ export default function Privacy() {
         title: "5. Temeiul legal al prelucrării",
         paragraphs: ["Prelucrăm datele dumneavoastră pe baza următoarelor temeiuri legale:"],
         bulletList: [
-          { bold: "Consimțământul:", text: "pentru trimiterea formularului de contact și comunicări de marketing" },
+          { bold: "Consimțământul:", text: "pentru trimiterea formularului de contact, comunicări de marketing și cookie-urile de analiză (Google Analytics)" },
           { bold: "Executarea contractului:", text: "pentru furnizarea serviciilor medicale solicitate" },
           { bold: "Obligația legală:", text: "pentru păstrarea documentației medicale conform legislației în vigoare" },
           { bold: "Interesul legitim:", text: "pentru îmbunătățirea serviciilor și securitatea site-ului" }
@@ -102,9 +104,16 @@ export default function Privacy() {
       {
         title: "9. Cookies și tracking",
         paragraphs: [
-          "Respectăm confidențialitatea dumneavoastră. Site-ul nostru nu utilizează cookies de tracking, cookies analitice sau alte tehnologii de urmărire a comportamentului vizitatorilor. Nu colectăm date despre navigarea dumneavoastră și nu partajăm informații cu terțe părți în scopuri de analiză sau marketing.",
-          "Singurele cookies care pot fi utilizate sunt cele strict necesare pentru funcționarea tehnică a site-ului (de exemplu, pentru menținerea sesiunii în formularul de contact), care nu necesită consimțământ conform legislației în vigoare."
-        ]
+          "Folosim Google Analytics 4, un serviciu furnizat de Google Ireland Limited, pentru a înțelege cum este utilizat site-ul (de exemplu, paginile vizitate, durata vizitei, tipul de dispozitiv, localizarea aproximativă, trimiterea formularului de contact și click-urile pe numerele de telefon) și pentru a-l îmbunătăți. Folosim și Google Tag Manager, tot de la Google, pentru a gestiona aceste instrumente. Datele sunt statistice și nu le folosim pentru a vă identifica personal sau în scopuri de publicitate.",
+          "Cookie-urile de analiză sunt folosite doar dacă vă dați acordul prin bannerul de cookie-uri. Folosim modul de consimțământ Google (Consent Mode): fără acord, nu se setează niciun cookie de analiză sau de publicitate, iar Google primește doar semnale limitate, fără cookie-uri și fără identificatori (de exemplu, faptul că o pagină a fost accesată, tipul de browser și starea consimțământului), pe care le folosește doar agregat, pentru estimări statistice. Opțiunea aleasă este salvată doar în browserul dumneavoastră (local storage) și o puteți modifica sau retrage oricând din butonul de mai jos sau din linkul „Setări cookie-uri” din subsolul site-ului; la retragere, cookie-urile de analiză sunt șterse.",
+          "Datele colectate de Google pot fi transferate în afara Spațiului Economic European, inclusiv în SUA, în baza Cadrului UE-SUA privind protecția datelor (EU-US Data Privacy Framework). Pentru detalii, consultați Politica de confidențialitate Google: https://policies.google.com/privacy.",
+          "În afara celor de mai sus, folosim doar elemente strict necesare pentru funcționarea tehnică a site-ului, care nu necesită consimțământ conform legislației în vigoare."
+        ],
+        bulletList: [
+          { bold: "_ga:", text: "cookie Google Analytics care distinge vizitatorii unici; durată: 2 ani" },
+          { bold: "_ga_<ID>:", text: "cookie Google Analytics care păstrează starea sesiunii; durată: 2 ani" }
+        ],
+        cookieSettings: true
       },
       {
         title: "10. Modificări ale politicii",
@@ -165,7 +174,7 @@ export default function Privacy() {
         title: "5. Legal Basis for Processing",
         paragraphs: ["We process your data based on the following legal grounds:"],
         bulletList: [
-          { bold: "Consent:", text: "for submitting the contact form and marketing communications" },
+          { bold: "Consent:", text: "for submitting the contact form, marketing communications and analytics cookies (Google Analytics)" },
           { bold: "Contract performance:", text: "for providing the requested medical services" },
           { bold: "Legal obligation:", text: "for maintaining medical documentation according to current legislation" },
           { bold: "Legitimate interest:", text: "for improving services and website security" }
@@ -202,9 +211,16 @@ export default function Privacy() {
       {
         title: "9. Cookies and Tracking",
         paragraphs: [
-          "We respect your privacy. Our website does not use tracking cookies, analytical cookies, or other technologies for monitoring visitor behavior. We do not collect data about your browsing activity and do not share information with third parties for analytics or marketing purposes.",
-          "The only cookies that may be used are those strictly necessary for the technical operation of the website (for example, to maintain the session in the contact form), which do not require consent under current legislation."
-        ]
+          "We use Google Analytics 4, a service provided by Google Ireland Limited, to understand how the website is used (for example, pages visited, visit duration, device type, approximate location, contact form submissions and clicks on phone numbers) and to improve it. We also use Google Tag Manager, also provided by Google, to manage these tools. The data is statistical; we do not use it to identify you personally or for advertising.",
+          "Analytics cookies are used only if you give your consent through the cookie banner. We use Google Consent Mode: without consent, no analytics or advertising cookie is set, and Google receives only limited, cookieless signals without identifiers (for example, that a page was visited, the browser type and the consent state), which it uses only in aggregate for statistical estimates. Your choice is stored only in your browser (local storage), and you can change or withdraw it at any time via the button below or the “Cookie settings” link in the site footer; on withdrawal, the analytics cookies are deleted.",
+          "Data collected by Google may be transferred outside the European Economic Area, including to the US, under the EU-US Data Privacy Framework. For details, see Google's Privacy Policy: https://policies.google.com/privacy.",
+          "Apart from the above, we only use elements strictly necessary for the technical operation of the website, which do not require consent under current legislation."
+        ],
+        bulletList: [
+          { bold: "_ga:", text: "Google Analytics cookie that distinguishes unique visitors; duration: 2 years" },
+          { bold: "_ga_<ID>:", text: "Google Analytics cookie that maintains session state; duration: 2 years" }
+        ],
+        cookieSettings: true
       },
       {
         title: "10. Policy Changes",
@@ -238,7 +254,7 @@ export default function Privacy() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-dark">
             {tPrivacy("title")} <span className="font-semibold">{tPrivacy("titleHighlight")}</span>
           </h1>
-          <p className="text-gray-500 mt-4">{t("lastUpdated")}</p>
+          <p className="text-gray-500 mt-4">{tPrivacy("lastUpdated")}</p>
         </div>
       </div>
 
@@ -269,6 +285,15 @@ export default function Privacy() {
               )}
               {section.footer && (
                 <p className="mt-4 leading-relaxed">{section.footer}</p>
+              )}
+              {section.cookieSettings && (
+                <button
+                  type="button"
+                  onClick={openConsentSettings}
+                  className="mt-6 bg-mint hover:bg-mint-dark text-dark px-5 py-2.5 text-sm font-semibold uppercase tracking-wider transition-colors"
+                >
+                  {t("cookieSettings")}
+                </button>
               )}
             </section>
           ))}

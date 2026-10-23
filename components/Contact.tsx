@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle } from "lucide-react";
 import ScheduleTable from "@/components/ScheduleTable";
+import { trackEvent } from "@/lib/analytics";
 import { EMAIL, MAP_URL, PHONES, SERVICES } from "@/lib/site";
 
 export default function Contact() {
@@ -73,6 +74,7 @@ export default function Contact() {
         throw new Error(data.error || "Error");
       }
 
+      trackEvent("generate_lead", { form_id: "contact" });
       setIsSuccess(true);
       setFormData({ name: "", phone: "", email: "", service: "", message: "" });
       setTimeout(() => setIsSuccess(false), 5000);

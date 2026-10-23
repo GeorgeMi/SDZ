@@ -5,6 +5,8 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import CookieConsent from "@/components/CookieConsent";
+import { GA_MEASUREMENT_ID, consentBootstrapScript, gtmScript } from "@/lib/analytics";
 import "../globals.css";
 
 const poppins = Poppins({
@@ -82,9 +84,17 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} data-scroll-behavior="smooth">
+      {/* Order matters: consent defaults, then gtag.js, then GTM. GTM's <noscript> iframe is
+          left out: without JavaScript the visitor cannot consent. */}
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: consentBootstrapScript }} />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: gtmScript }} />
+      </head>
       <body className={`${poppins.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
+          <CookieConsent />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -14,7 +14,8 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "bookConsultation": "Book a consultation",
-    "callPhone": "Call {phone}"
+    "callPhone": "Call {phone}",
+    "cookieSettings": "Cookie settings"
   },
   "header": {
     "brandName": "SMILE STUDIO",
@@ -206,7 +207,8 @@
     "title": "Privacy",
     "titleHighlight": "Policy",
     "intro": "Smile Studio, located in Moinești, Ion Creangă Street, bl. D5, sc. A, ground floor, ap. 1, respects the confidentiality of your personal data and is committed to protecting the information you provide to us.",
-    "introGdpr": "This privacy policy explains how we collect, use, and protect your personal data in accordance with the General Data Protection Regulation (GDPR) - Regulation (EU) 2016/679."
+    "introGdpr": "This privacy policy explains how we collect, use, and protect your personal data in accordance with the General Data Protection Regulation (GDPR) - Regulation (EU) 2016/679.",
+    "lastUpdated": "Last updated: October 2026"
   },
   "terms": {
     "title": "Terms and",
@@ -228,5 +230,12 @@
     "privacyTitle": "Privacy Policy",
     "termsTitle": "Terms and Conditions",
     "contactType": "Appointments and information"
+  },
+  "cookies": {
+    "title": "Cookies",
+    "message": "We use Google Analytics to understand how the website is used and to improve it. Analytics cookies are enabled only with your consent, and you can change your mind at any time via “Cookie settings”.",
+    "learnMore": "Privacy Policy",
+    "accept": "Accept",
+    "reject": "Reject"
   }
 }
